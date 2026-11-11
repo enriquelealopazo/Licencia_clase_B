@@ -204,3 +204,6 @@ details.info ul{padding-left:18px}
 .scard.hid .nm{display:none}.scard.hid .tap{display:block}
 .foot a{color:inherit}
 @media (max-width:400px){.sgrid{grid-template-columns:repeat(2,1fr)}}
+
+.dedic{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:600;color:var(--amber);letter-spacing:.5px;margin-top:6px}
+.fact .m{font-size:11px;color:var(--amber);font-weight:600;margin-top:3px}

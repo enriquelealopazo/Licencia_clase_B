@@ -42,7 +42,15 @@ const SIGNS_IN_EXAM = 5;          // preguntas de señales con imagen por examen
 })();
 const Q = window.QUESTIONS;
 const BY_ID = Object.fromEntries(Q.map(q => [q.id, q]));
-const EXAM = {n:35, secs:45*60, pass:33, doubles:['velocidad','alcohol','sri']};
+const EXAM = {n:35, secs:45*60, pass:33, max:38, doubles:['velocidad','alcohol','sri']};
+// Temas de doble puntaje: cada examen toma 1 pregunta de 3 de estos 4 grupos, elegidos al azar.
+const SEATBELT = ['conducta-3','infrac-4','segur-1','cinturon-1','cinturon-2'];
+const DOUBLE_POOLS = {
+  velocidad: q => q.cat === 'velocidad',
+  alcohol:   q => q.cat === 'alcohol',
+  sri:       q => q.cat === 'sri',
+  cinturon:  q => SEATBELT.includes(q.id)
+};
 const FAIL_STREAK = 2;           // aciertos seguidos para sacar una pregunta de "Mis fallos"
 const KEYS = ['A','B','C','D'];
 
@@ -119,7 +127,7 @@ function begin(mode, title, list, again){
 
 /* ---------------- modos ---------------- */
 function startExam(){
-  const doubles = EXAM.doubles.map(c => shuffle(Q.filter(q => q.cat === c))[0]);
+  const doubles = shuffle(Object.values(DOUBLE_POOLS)).slice(0, 3).map(f => shuffle(Q.filter(f))[0]);
   const used = new Set(doubles.map(q => q.id));
   const signs = shuffle(Q.filter(q => q.cat === 'visual')).slice(0, SIGNS_IN_EXAM);
   const rest = [...signs, ...shuffle(Q.filter(q => q.cat !== 'visual' && !used.has(q.id))).slice(0, EXAM.n - doubles.length - signs.length)];
@@ -397,8 +405,8 @@ function renderReady(){
   const px = 64 + R*Math.cos(passAng*Math.PI/180), py = 64 + R*Math.sin(passAng*Math.PI/180);
   $('ready').innerHTML = `<svg viewBox="0 0 128 128" aria-label="Índice de preparación">
       <circle cx="64" cy="64" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="11"/>
-      <circle cx="64" cy="64" r="${R}" fill="none" stroke="${col}" stroke-width="11" stroke-linecap="round"
-        stroke-dasharray="${C*pct} ${C}" transform="rotate(-90 64 64)"/>
+      ${pct > 0 ? `<circle cx="64" cy="64" r="${R}" fill="none" stroke="${col}" stroke-width="11" stroke-linecap="round"
+        stroke-dasharray="${C*pct} ${C}" transform="rotate(-90 64 64)"/>` : ''}
       <circle cx="${px}" cy="${py}" r="4" fill="var(--ink)"/>
       <text x="64" y="64" text-anchor="middle" font-family="Barlow Condensed" font-weight="700" font-size="32" fill="var(--ink)">${big}</text>
       <text x="64" y="84" text-anchor="middle" font-family="Inter" font-size="11" fill="var(--muted)">promedio /38</text>
