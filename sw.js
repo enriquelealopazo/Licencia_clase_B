@@ -1,7 +1,8 @@
 /* Service worker: permite estudiar sin conexión. Sube VERSION al cambiar archivos. */
-const VERSION = 'lcb-v2.0.0';
+const VERSION = 'lcb-v2.1.1';
+importScripts('assets/js/signs-official.js');
 const ASSETS = ['./', 'index.html', 'manifest.webmanifest', 'assets/css/app.css',
-  'assets/js/questions.js', 'assets/js/signs.js', 'assets/js/app.js', 'assets/icon.svg'];
+  'assets/js/questions.js', 'assets/js/signs-official.js', 'assets/js/signs.js', 'assets/js/app.js', 'assets/icon.svg', ...self.OFFICIAL_SIGNS.map(s => s.src)];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
