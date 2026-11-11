@@ -3,617 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#14161A">
-<title>Estudia tu Licencia Clase B · Simulador Teórico</title>
+<meta name="theme-color" content="#14161A" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F2EC" media="(prefers-color-scheme: light)">
+<title>Examen Clase B · Simulador teórico gratis</title>
+<meta name="description" content="Simulador gratuito del examen teórico de licencia Clase B en Chile: 35 preguntas, 45 minutos, 3 de doble puntaje. Practica por áreas, repasa tus fallos y mide si estás listo.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --asphalt:#14161A;--surface:#1D2128;--surface-2:#252A33;--line:#333A45;
-    --amber:#F2B01E;--green:#2FBF71;--red:#E5484D;--blue:#4C8DF6;
-    --ink:#ECEDEE;--muted:#8B929D;--muted-2:#5E6672;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{background:var(--asphalt);color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
-  body{min-height:100vh;padding:0 0 48px}
-  .wrap{max-width:720px;margin:0 auto;padding:0 18px}
-  h1,h2,h3,.disp{font-family:'Barlow Condensed',sans-serif;letter-spacing:.2px;line-height:1.05}
-  .roadband{height:8px;width:100%;background:repeating-linear-gradient(90deg,var(--amber) 0 34px,transparent 34px 64px) center/100% 4px no-repeat,var(--surface);}
-  header{padding:22px 0 6px}
-  .eyebrow{font-family:'Barlow Condensed';text-transform:uppercase;letter-spacing:2px;color:var(--amber);font-size:14px;font-weight:600}
-  header h1{font-size:34px;font-weight:700;margin-top:2px}
-  header .sub{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.45}
-  .noscript-box{background:#3a1113;border:1px solid var(--red);color:#ffd9da;border-radius:12px;padding:16px;margin:18px 0;font-size:14px;line-height:1.5}
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
-  .mt-s{margin-top:10px}
-  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
-  .fact{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 8px;text-align:center}
-  .fact .n{font-family:'Barlow Condensed';font-size:28px;font-weight:700;color:var(--amber)}
-  .fact .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;line-height:1.2}
-  .temario{margin-top:12px;text-align:center;font-size:13px;color:var(--muted)}
-  .temario b{color:var(--ink)}
-  .section-title{font-size:15px;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-family:'Barlow Condensed';font-weight:600;margin:26px 0 12px;display:flex;align-items:center;gap:10px}
-  .section-title::after{content:"";flex:1;height:1px;background:var(--line)}
-  .mode{width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;color:var(--ink);cursor:pointer;display:flex;gap:14px;align-items:center;transition:border-color .15s,transform .1s;margin-bottom:10px}
-  .mode:hover{border-color:var(--amber)}.mode:active{transform:scale(.99)}
-  .mode .ico{width:44px;height:44px;flex:none;border-radius:10px;display:grid;place-items:center;font-family:'Barlow Condensed';font-weight:700;font-size:20px}
-  .mode h3{font-size:21px;font-weight:600}.mode p{color:var(--muted);font-size:13px;margin-top:2px;line-height:1.4}
-  .mode.exam .ico{background:rgba(242,176,30,.14);color:var(--amber);border:1px solid rgba(242,176,30,.35)}
-  .mode.fails .ico{background:rgba(229,72,77,.14);color:var(--red);border:1px solid rgba(229,72,77,.35)}
-  .mode.study .ico{background:rgba(76,141,246,.14);color:var(--blue);border:1px solid rgba(76,141,246,.35)}
-  .mode .count{margin-left:auto;font-family:'Barlow Condensed';font-weight:700;font-size:22px;color:var(--muted);flex:none}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:13px;color:var(--ink);cursor:pointer;font-weight:500;transition:.15s;display:flex;align-items:center}
-  .chip:hover{border-color:var(--muted)}
-  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px}
-  .chip .cnt{color:var(--muted-2);font-size:11px;margin-left:6px}
-  .chip.all{background:rgba(76,141,246,.1);border-color:rgba(76,141,246,.4);color:#a9c9ff;font-weight:600}
-  .chip.mastered{border-color:rgba(47,191,113,.5)}
-  .chip .chk{color:var(--green);margin-left:6px;font-size:12px}
-  .best{margin-top:14px;font-size:13px;color:var(--muted);text-align:center}
-  .best b{color:var(--green)}
-  .note{font-size:13px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.5}
-  .clearlink{color:var(--muted-2);font-size:12px;text-decoration:underline;cursor:pointer;display:inline-block;margin-top:8px}
-  .qtop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
-  .qcat{font-family:'Barlow Condensed';font-weight:600;text-transform:uppercase;letter-spacing:1px;font-size:14px}
-  .timer{font-family:'Barlow Condensed';font-weight:700;font-size:22px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:2px 10px}
-  .timer.warn{color:var(--red);border-color:var(--red)}
-  .progress{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin:10px 0 4px}
-  .progress > span{display:block;height:100%;background:var(--amber);width:0;transition:width .3s}
-  .qmeta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:14px}
-  .badge-doble{background:rgba(229,72,77,.15);color:#ff8a8d;border:1px solid rgba(229,72,77,.4);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700;font-family:'Barlow Condensed';letter-spacing:.5px;text-transform:uppercase}
-  .qtext{font-size:20px;line-height:1.35;font-weight:600;margin:6px 0 18px}
-  .opt{width:100%;text-align:left;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:15px 16px;color:var(--ink);font-size:15px;cursor:pointer;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;transition:.12s;line-height:1.35}
-  .opt:hover:not(:disabled){border-color:var(--muted)}.opt:disabled{cursor:default}
-  .opt .key{flex:none;width:26px;height:26px;border-radius:7px;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:14px;font-family:'Barlow Condensed';color:var(--muted)}
-  .opt.correct{border-color:var(--green);background:rgba(47,191,113,.1)}
-  .opt.correct .key{background:var(--green);color:#0b1f14}
-  .opt.wrong{border-color:var(--red);background:rgba(229,72,77,.1)}
-  .opt.wrong .key{background:var(--red);color:#2a0d0e}
-  .opt.dim{opacity:.5}
-  .exp{border-left:3px solid var(--amber);background:var(--surface);border-radius:0 10px 10px 0;padding:14px 16px;margin-top:6px;font-size:14px;line-height:1.5;color:#d3d7dd}
-  .exp b{color:var(--amber);font-family:'Barlow Condensed';font-size:15px;letter-spacing:.5px}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;border-radius:11px;padding:15px 20px;font-size:16px;font-weight:600;cursor:pointer;font-family:'Inter';transition:.12s}
-  .btn-primary{background:var(--amber);color:#1a1408;width:100%}.btn-primary:hover{filter:brightness(1.06)}
-  .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
-  .btn-ghost:hover{border-color:var(--muted);color:var(--ink)}
-  .btnrow{display:flex;gap:10px;margin-top:18px}.btnrow .btn{flex:1}
-  .result-hero{text-align:center;padding:26px 18px}
-  .verdict{font-family:'Barlow Condensed';font-weight:700;font-size:40px;letter-spacing:1px}
-  .verdict.ok{color:var(--green)}.verdict.no{color:var(--red)}
-  .score-big{font-family:'Barlow Condensed';font-weight:700;font-size:72px;line-height:1}
-  .score-big span{font-size:32px;color:var(--muted)}
-  .gauge{height:12px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin:16px auto 6px;max-width:340px;position:relative}
-  .gauge > span{display:block;height:100%;transition:width .6s ease}
-  .passline{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink)}
-  .passtag{font-size:11px;color:var(--muted);max-width:340px;margin:0 auto;text-align:right}
-  .brk-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:14px}
-  .brk-row:last-child{border-bottom:none}.brk-row .nm{flex:1}
-  .brk-row .dot{width:9px;height:9px;border-radius:50%}
-  .brk-row .val{font-family:'Barlow Condensed';font-weight:700;font-size:16px;color:var(--muted)}
-  .review-q{padding:14px 0;border-bottom:1px solid var(--line)}.review-q:last-child{border-bottom:none}
-  .review-q .rq{font-weight:600;font-size:15px;line-height:1.35;margin-bottom:8px}
-  .review-q .ra{font-size:13px;line-height:1.45;color:var(--muted)}
-  .review-q .ra .ok{color:var(--green);font-weight:600}
-  .review-q .ra .no{color:var(--red);font-weight:600;text-decoration:line-through}
-  .foot{color:var(--muted-2);font-size:11.5px;line-height:1.55;margin-top:26px;text-align:center}
-  .hidden{display:none}
-  @media(max-width:480px){header h1{font-size:27px}.qtext{font-size:18px}.fact .n{font-size:23px}.score-big{font-size:58px}.facts{gap:7px}}
-</style>
+<link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body>
 <div class="roadband"></div>
+<noscript><div class="wrap"><div class="card" style="margin-top:20px">Este simulador necesita JavaScript activado.</div></div></noscript>
+
 <div class="wrap">
 
-  <noscript>
-    <div class="noscript-box">⚠️ Este simulador necesita JavaScript. Si lo recibiste por WhatsApp, no lo abras dentro de WhatsApp: toca “Compartir” y elige <b>Abrir en Safari</b> o <b>Chrome</b>. Ahí funcionará.</div>
-  </noscript>
+  <!-- ================= HOME ================= -->
+  <main id="home">
+    <div class="topbar">
+      <div class="brand">
+        <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="17" y="17" width="66" height="66" rx="6" transform="rotate(45 50 50)" fill="#F2B01E" stroke="#111" stroke-width="4"/><text x="50" y="62" font-family="Arial" font-weight="700" font-size="34" text-anchor="middle" fill="#111">B</text></svg>
+        <div><b>Examen Clase B</b><small>Simulador teórico · Chile</small></div>
+      </div>
+      <button class="linkbtn" onclick="App.resetAsk()">Reiniciar progreso</button>
+    </div>
 
-  <!-- ============ HOME ============ -->
-  <div id="home">
-    <header>
-      <div class="eyebrow">CONASET · Libro del Nuevo Conductor</div>
-      <h1>Estudia tu<br>Licencia Clase B</h1>
-      <div class="sub">Simulador de temario para el examen teórico en Chile. Cubre todas las áreas del libro con explicaciones simples. No es el banco textual del examen: rota preguntas para que aprendas el <i>porqué</i>, no de memoria.</div>
-    </header>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Examen teórico municipal</div>
+        <h1>Practica como si ya estuvieras rindiendo</h1>
+        <p>Mismo formato del examen real: 35 preguntas, 45 minutos y 3 de doble puntaje. Sin pagos ni registro. Tu avance queda guardado en este dispositivo.</p>
+      </div>
+      <div class="ready" id="ready"></div>
+    </section>
 
     <div class="facts">
-      <div class="fact"><div class="n">35</div><div class="l">Preguntas examen</div></div>
-      <div class="fact"><div class="n">33<span style="font-size:16px;color:var(--muted)">/38</span></div><div class="l">Para aprobar</div></div>
-      <div class="fact"><div class="n">45'</div><div class="l">Cronómetro</div></div>
+      <div class="fact"><div class="n">35</div><div class="l">Preguntas</div></div>
+      <div class="fact"><div class="n">33<small>/38</small></div><div class="l">Para aprobar</div></div>
+      <div class="fact"><div class="n">45'</div><div class="l">Tiempo</div></div>
+      <div class="fact"><div class="n" id="bankSize">—</div><div class="l">En el banco</div></div>
     </div>
-    <div class="temario" id="temario"></div>
-    <div class="best" id="bestBox"></div>
 
     <div class="section-title">Elige cómo practicar</div>
-    <button class="mode exam" onclick="startExam()">
-      <div class="ico">EX</div>
-      <div><h3>Modo Examen</h3><p>35 preguntas aleatorias, 45 min, con las 3 de doble puntaje. Resultado al final, como en el Nexteo municipal.</p></div>
-    </button>
-    <button class="mode fails" id="failsBtn" onclick="startFails()">
-      <div class="ico">✕</div>
-      <div><h3>Solo mis fallos</h3><p id="failsDesc">Repasa únicamente las preguntas que has errado, hasta dominarlas.</p></div>
-      <div class="count" id="failsCount">0</div>
-    </button>
-    <button class="mode study" onclick="showStudy()">
-      <div class="ico">ES</div>
-      <div><h3>Modo Estudio</h3><p>Elige un área del temario y practica sin reloj. Te explico el porqué después de cada respuesta.</p></div>
-    </button>
-
-    <div id="studyPanel" class="hidden">
-      <div class="section-title">Áreas del temario</div>
-      <div class="chips" id="catChips"></div>
+    <div class="modes">
+      <button class="mode primary" onclick="App.startExam()">
+        <div class="ico">EX</div>
+        <div><h3>Examen simulado</h3><p>35 preguntas al azar, 45 min. Sin ver respuestas hasta el final; puedes marcar y volver a las dudosas, igual que en el examen real.</p></div>
+      </button>
+      <button class="mode" id="failsBtn" onclick="App.startFails()">
+        <div class="ico t-red">✕</div>
+        <div><h3>Mis fallos</h3><p id="failsDesc">Las que has errado. Salen del repaso al acertarlas 2 veces seguidas.</p></div>
+        <div class="count" id="failsCount">0</div>
+      </button>
+      <button class="mode" onclick="App.startVisual()">
+        <div class="ico t-sky" id="visualIco"></div>
+        <div><h3>Señales visuales</h3><p>Reconoce las señales por su forma y color, como en la calle.</p></div>
+      </button>
+      <button class="mode" onclick="App.startWeak()">
+        <div class="ico t-blue">◎</div>
+        <div><h3>Mis áreas débiles</h3><p id="weakDesc">15 preguntas de las áreas donde tienes menos aciertos.</p></div>
+      </button>
+      <button class="mode" onclick="App.startQuick()">
+        <div class="ico t-green">10</div>
+        <div><h3>Ronda rápida</h3><p>10 preguntas al azar con explicación inmediata. Ideal para 5 minutos libres.</p></div>
+      </button>
     </div>
 
-    <div class="foot" id="foot"></div>
-  </div>
+    <div class="section-title">Estudia por área</div>
+    <div class="cats" id="cats"></div>
 
-  <!-- ============ QUIZ ============ -->
-  <div id="quiz" class="hidden">
-    <header style="padding-top:18px">
+    <div class="section-title">Tu historial de exámenes</div>
+    <div class="card" id="history"></div>
+
+    <div class="section-title">Cómo es el examen real</div>
+    <details class="info"><summary>Formato y puntaje</summary><div>
+      <ul>
+        <li>35 preguntas de selección múltiple en computador, en la Dirección de Tránsito de tu municipalidad.</li>
+        <li>3 preguntas valen doble, por lo que el máximo es 38 puntos.</li>
+        <li>Apruebas con <b>33 puntos</b>: puedes fallar como máximo 5 preguntas simples, o menos si alguna es de doble puntaje.</li>
+        <li>Tienes 45 minutos. A la mayoría le sobra tiempo, así que lee cada pregunta completa.</li>
+      </ul></div></details>
+    <details class="info"><summary>Qué evalúan además del teórico</summary><div>
+      <ul>
+        <li><b>Examen psicotécnico</b>: reflejos, coordinación y reacción.</li>
+        <li><b>Examen médico</b>: visión, audición y estado general.</li>
+        <li><b>Examen práctico</b>: conducción real con un examinador.</li>
+      </ul>
+      El orden y los requisitos pueden variar por municipio: confírmalos al pedir tu hora.</div></details>
+    <details class="info"><summary>Estrategia para aprobar a la primera</summary><div>
+      <ul>
+        <li>Haz exámenes simulados hasta superar 33 puntos <b>tres veces seguidas</b>. Uno solo puede ser suerte.</li>
+        <li>Velocidad, alcohol y sillas infantiles son las áreas que este simulador usa para las preguntas de doble puntaje. Domínalas: fallar una te quita 2 puntos.</li>
+        <li>Desconfía de las opciones con "siempre", "nunca" o "solo si". Suelen ser trampas.</li>
+        <li>Vacía la sección "Mis fallos" antes del día del examen.</li>
+      </ul></div></details>
+
+    <p class="foot" id="foot"></p>
+  </main>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="quiz" class="hidden" aria-live="polite">
+    <div class="qhead">
       <div class="qtop">
         <div class="qcat" id="qCat"></div>
         <div class="timer hidden" id="timer">45:00</div>
       </div>
       <div class="progress"><span id="progFill"></span></div>
       <div class="qmeta"><span id="qCounter"></span><span id="qBadge"></span></div>
-    </header>
+    </div>
+    <div class="qimg hidden" id="qImg"></div>
     <div class="qtext" id="qText"></div>
     <div id="opts"></div>
     <div id="expBox"></div>
-    <div class="btnrow" id="quizBtns">
-      <button class="btn btn-ghost" onclick="quitQuiz()">Salir</button>
-      <button class="btn btn-primary hidden" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
-    </div>
-  </div>
 
-  <!-- ============ RESULT ============ -->
-  <div id="result" class="hidden">
-    <div class="result-hero card" style="margin-top:24px">
+    <!-- botones estudio -->
+    <div class="btnrow" id="studyBtns">
+      <button class="btn" onclick="App.quit()">Salir</button>
+      <button class="btn btn-primary hidden" id="nextBtn" onclick="App.next()">Siguiente</button>
+    </div>
+    <!-- botones examen -->
+    <div id="examBtns" class="hidden">
+      <div class="btnrow">
+        <button class="btn" id="prevBtn" onclick="App.go(-1)">← Anterior</button>
+        <button class="btn btn-flag" id="flagBtn" onclick="App.toggleFlag()">⚑ Marcar</button>
+        <button class="btn btn-primary" id="fwdBtn" onclick="App.go(1)">Siguiente →</button>
+      </div>
+      <div class="section-title">Mapa del examen</div>
+      <div class="grid" id="grid"></div>
+      <div class="legend"><span>■ Respondida</span><span style="color:var(--amber)">● Marcada</span></div>
+      <div class="btnrow">
+        <button class="btn" onclick="App.quit()">Abandonar</button>
+        <button class="btn btn-primary" onclick="App.finishAsk()">Entregar examen</button>
+      </div>
+    </div>
+    <p class="kbd">Atajos: teclas 1-3 o A-C para responder · Enter para avanzar · ← → para moverte</p>
+  </section>
+
+  <!-- ================= RESULT ================= -->
+  <section id="result" class="hidden">
+    <div class="result-hero card">
       <div class="verdict" id="verdict"></div>
       <div class="score-big" id="scoreBig"></div>
       <div class="gauge"><span id="gaugeFill"></span><i class="passline" id="passLine"></i></div>
-      <div class="passtag">Línea de aprobación: 33 pts</div>
-      <div id="resSub" style="color:var(--muted);font-size:14px;margin-top:10px"></div>
+      <div class="passtag" id="passTag"></div>
+      <div class="res-stats" id="resStats"></div>
+      <div id="resSub" style="color:var(--muted);font-size:14px;margin-top:12px;line-height:1.5"></div>
     </div>
     <div class="section-title">Desglose por área</div>
     <div class="card" id="brkBox"></div>
-    <div id="reviewWrap" class="hidden">
-      <div class="section-title">Libro de fallos</div>
-      <div class="card" id="reviewBox"></div>
+    <div class="section-title">Revisión</div>
+    <div class="card">
+      <div class="tabs" id="revTabs"></div>
+      <div id="reviewBox"></div>
     </div>
     <div class="btnrow">
-      <button class="btn btn-ghost" onclick="goHome()">Inicio</button>
-      <button class="btn btn-primary" onclick="startExam()">Repetir examen</button>
+      <button class="btn" onclick="App.home()">Inicio</button>
+      <button class="btn btn-primary" id="againBtn">Repetir</button>
     </div>
-    <div class="foot" id="foot2"></div>
-  </div>
+  </section>
 
 </div>
 
-<script>
-/* ============================================================
-   BANCO DE PREGUNTAS — redacción propia basada en el
-   Libro del Nuevo Conductor (CONASET) y la Ley 18.290 y sus
-   modificaciones (20.580, 21.492, 21.088, ley de sillas).
-   Verificado a agosto 2026. cat=área · d:true=doble puntaje.
-   ============================================================ */
-const CATS = {
-  senales:    {label:"Señales de tránsito", color:"#4C8DF6"},
-  velocidad:  {label:"Velocidad", color:"#F2B01E", d:true},
-  alcohol:    {label:"Alcohol y drogas", color:"#E5484D", d:true},
-  sri:        {label:"Retención infantil (silla)", color:"#C77DFF", d:true},
-  conducta:   {label:"Conducta vial", color:"#2FBF71"},
-  paso:       {label:"Preferencia de paso", color:"#38BDF8"},
-  convivencia:{label:"Peatones y ciclistas", color:"#22D3AA"},
-  maniobras:  {label:"Maniobras", color:"#F97316"},
-  luces:      {label:"Luces y señalización", color:"#FBBF24"},
-  emergencia: {label:"Accidentes y emergencias", color:"#F43F5E"},
-  segur:      {label:"Seguridad del vehículo", color:"#9CA3AF"},
-  docs:       {label:"Documentos y licencia", color:"#A78BFA"},
-  infrac:     {label:"Infracciones y sanciones", color:"#EAB308"},
-  ambiente:   {label:"Medio ambiente y eficiencia", color:"#34D399"},
-  humano:     {label:"El conductor (fatiga, ánimo)", color:"#60A5FA"}
-};
+<div class="modal hidden" id="modal"><div class="card"><h3 id="mTitle"></h3><p id="mText"></p>
+  <div class="btnrow"><button class="btn" id="mNo">Cancelar</button><button class="btn btn-primary" id="mYes">Confirmar</button></div></div></div>
 
-const Q = [
-  /* ---------- SEÑALES (22) ---------- */
-  {cat:"senales", q:"La señal PARE (octágono rojo) obliga a:", opts:["Reducir la velocidad y pasar si no viene nadie","Detenerse por completo antes de la línea, ceder el paso y avanzar solo cuando sea seguro","Tocar la bocina y continuar"], correct:1, exp:"Es la única señal con forma de octágono. Exige detención TOTAL, no basta reducir. Avanzas solo cuando la vía está despejada."},
-  {cat:"senales", q:"Una señal con forma de rombo y fondo amarillo es de tipo:", opts:["Reglamentaria (prohíbe u obliga)","Preventiva (advierte un peligro)","Informativa (orienta)"], correct:1, exp:"Amarillo en rombo = preventiva. Te avisa de un riesgo próximo (curva, cruce, niños) para que te prepares."},
-  {cat:"senales", q:"Las señales reglamentarias (fondo blanco con orla roja) sirven para:", opts:["Imponer prohibiciones u obligaciones","Indicar servicios cercanos","Sugerir una velocidad recomendada"], correct:0, exp:"Reglamentarias = mandato. No cumplirlas es infracción (ej: 'No entrar', 'Prohibido virar', límite de velocidad)."},
-  {cat:"senales", q:"Ante la señal CEDA EL PASO (triángulo invertido), debes:", opts:["Detenerte siempre por completo como en un PARE","Ceder el paso a la vía preferente, deteniéndote solo si es necesario","Continuar, tú siempre tienes preferencia"], correct:1, exp:"A diferencia del PARE, aquí no siempre te detienes: si la vía está libre continúas; si viene otro, cedes."},
-  {cat:"senales", q:"Una línea central continua en la calzada indica que:", opts:["Puedes adelantar con precaución","Está prohibido cruzarla o adelantar","Es solo decorativa"], correct:1, exp:"Línea continua = no la cruces ni adelantes. La segmentada sí permite adelantar cuando hay buena visibilidad."},
-  {cat:"senales", q:"Ante un semáforo en luz amarilla, lo correcto es:", opts:["Acelerar para alcanzar a pasar","Detenerte si puedes hacerlo con seguridad","Ignorarla, equivale a verde"], correct:1, exp:"El amarillo anuncia el rojo: prepárate a parar. Acelerar para 'ganarle' causa muchos choques en las esquinas."},
-  {cat:"senales", q:"Las señales informativas (fondo azul o verde) sirven para:", opts:["Orientar y guiar (destinos, servicios, sentidos)","Prohibir maniobras","Advertir peligros inmediatos"], correct:0, exp:"Azul/verde = información. No mandan ni advierten peligro: te ubican en la ruta (salidas, hospitales, ciudades)."},
-  {cat:"senales", q:"Un semáforo con luz roja intermitente (que parpadea) equivale a:", opts:["Seguir con precaución","Una señal PARE: detención total","Que el semáforo está descompuesto y no aplica"], correct:1, exp:"Rojo intermitente = PARE. Debes detenerte por completo y avanzar cuando sea seguro."},
-  {cat:"senales", q:"Un semáforo con luz amarilla intermitente indica:", opts:["Detención total obligatoria","Avanzar con precaución, cediendo el paso","Prohibido pasar"], correct:1, exp:"Amarillo parpadeante = precaución. Reduce, mira bien y cruza cediendo el paso; no exige detenerte del todo."},
-  {cat:"senales", q:"Una señal en forma de aspa (cruz de San Andrés) advierte:", opts:["Un cruce de peatones","Un cruce ferroviario a nivel","El fin de una autopista"], correct:1, exp:"Marca un cruce con vía de tren. El tren SIEMPRE tiene preferencia: nunca cruces con la barrera baja o la luz activa."},
-  {cat:"senales", q:"Las flechas pintadas en el pavimento de una pista indican:", opts:["Una decoración de la calzada","El sentido o los virajes obligatorios de esa pista","Zona de estacionamiento"], correct:1, exp:"Te dicen qué maniobra puedes hacer desde esa pista. Ubícate con tiempo en la pista correcta."},
-  {cat:"senales", q:"Una señal circular con fondo rojo y una barra blanca horizontal significa:", opts:["Estacionamiento permitido","No entrar / dirección prohibida","Ceda el paso"], correct:1, exp:"Es 'No entre': prohíbe el ingreso a esa vía (típico de calles de un sentido). Ignorarla es infracción grave."},
-  {cat:"senales", q:"Una línea segmentada (a trazos) en la calzada indica que:", opts:["Nunca se puede cruzar","Se permite adelantar o cambiar de pista cuando es seguro","Es exclusiva para buses"], correct:1, exp:"La discontinua permite cruzarla para adelantar o cambiar de pista, con visibilidad. La continua, no."},
-  {cat:"senales", q:"Una señal preventiva de 'Zona de escuela' te indica que debes:", opts:["Acelerar para pasar rápido","Reducir la velocidad y extremar la atención por niños","Tocar la bocina"], correct:1, exp:"Anticipa presencia de niños. En horario de entrada/salida el máximo es 30 km/h; los niños son impredecibles."},
-  {cat:"senales", q:"Una señal reglamentaria de 'No adelantar' significa que:", opts:["Puedes adelantar con cuidado","Está prohibido adelantar en ese tramo","Solo pueden adelantar los camiones"], correct:1, exp:"Prohíbe rebasar en ese sector (curvas, poca visibilidad, riesgo). Espera hasta que la señal termine o la vía lo permita."},
-  {cat:"senales", q:"Una señal preventiva con una flecha en curva te advierte que:", opts:["Viene una curva: reduce y no adelantes","La calle termina","Hay estacionamiento"], correct:0, exp:"Anuncia una curva peligrosa. Baja la velocidad antes de entrar; frenar dentro de la curva te hace perder el control."},
-  {cat:"senales", q:"Una señal preventiva de 'resalto' o 'lomo de toro' indica que:", opts:["Puedes acelerar","Hay un resalto en la calzada: reduce la velocidad","La vía está en mal estado permanente"], correct:1, exp:"Avisa de un badén o lomo de toro. Pásalo lento: a velocidad daña el vehículo y descontrola la dirección."},
-  {cat:"senales", q:"Una señal circular blanca con orla roja y un número (por ejemplo 60) indica:", opts:["Una velocidad recomendada","La velocidad máxima obligatoria en ese tramo","La distancia a la próxima ciudad"], correct:1, exp:"Es reglamentaria: fija el máximo legal de ese tramo. Superarlo es infracción, aunque te sientas seguro."},
-  {cat:"senales", q:"Una señal de 'Prohibido estacionar' significa que:", opts:["Puedes detenerte un rato","No puedes dejar el vehículo estacionado allí","Solo se prohíbe de noche"], correct:1, exp:"No dejes el auto detenido en ese sector. Pueden cursarte parte y hasta retirar el vehículo con grúa."},
-  {cat:"senales", q:"Una señal reglamentaria de 'sentido único' (flecha) indica que:", opts:["La vía es de un solo sentido; prohibido ir en contra","Puedes ir en cualquier dirección","Es una calle sin salida"], correct:0, exp:"El tránsito va en una sola dirección. Ir en contra es de las infracciones más peligrosas (riesgo de choque frontal)."},
-  {cat:"senales", q:"Un semáforo con la figura de un peatón regula:", opts:["A los vehículos","A los peatones","A los ciclistas solamente"], correct:1, exp:"Ordena el cruce de los peatones. Aun así, si un peatón va cruzando, el conductor debe cederle el paso."},
-  {cat:"senales", q:"Una señal preventiva con la figura de personas caminando advierte:", opts:["Zona de estacionamiento","Posible cruce de peatones: reduce y prepárate a ceder","Fin de la acera"], correct:1, exp:"Anticipa que puede haber peatones cruzando. Baja la velocidad para poder detenerte a tiempo."},
-
-  /* ---------- VELOCIDAD (9) doble ---------- */
-  {cat:"velocidad", d:true, q:"¿Cuál es la velocidad máxima en zona urbana en Chile?", opts:["60 km/h","50 km/h","40 km/h"], correct:1, exp:"La Ley 21.492 bajó el máximo urbano de 60 a 50 km/h. A menor velocidad, un peatón atropellado tiene muchas más chances de sobrevivir."},
-  {cat:"velocidad", d:true, q:"En zona de escuela, en horario de entrada y salida de alumnos, la velocidad máxima es:", opts:["50 km/h","40 km/h","30 km/h"], correct:2, exp:"30 km/h en zona escolar durante el ingreso/egreso. Es un tramo crítico donde los niños cruzan sin avisar."},
-  {cat:"velocidad", d:true, q:"En un camino rural con una sola pista por sentido, la velocidad máxima para autos es:", opts:["80 km/h","100 km/h","120 km/h"], correct:1, exp:"100 km/h en rural de una pista por sentido. Los 120 son solo para vías de dos o más pistas en el mismo sentido."},
-  {cat:"velocidad", d:true, q:"En una autopista con dos o más pistas en un mismo sentido, la velocidad máxima para autos es:", opts:["100 km/h","120 km/h","140 km/h"], correct:1, exp:"120 km/h es el tope para autos. Buses y camiones pesados tienen límites menores (90–100)."},
-  {cat:"velocidad", d:true, q:"Superar el límite de velocidad en más de 20 km/h se considera:", opts:["Infracción leve","Infracción grave","Infracción gravísima"], correct:2, exp:"Escala: hasta 10 km/h = menos grave; 11 a 20 = grave; más de 20 = GRAVÍSIMA. Ej: ir a 71+ donde el límite es 50."},
-  {cat:"velocidad", d:true, q:"Con lluvia o neblina, aunque el límite sea 100 km/h, debes:", opts:["Mantener el límite máximo, es legal","Reducir a una velocidad razonable y prudente según las condiciones","Acelerar para salir de la zona peligrosa"], correct:1, exp:"El límite es un máximo, no una obligación. Siempre adecúa la velocidad a la visibilidad y al piso. Ir al tope bajo lluvia igual es infracción."},
-  {cat:"velocidad", d:true, q:"Al acercarte a un cruce o intersección, aunque tengas preferencia, debes:", opts:["Mantener tu velocidad","Reducir la velocidad y estar atento","Acelerar para pasar rápido"], correct:1, exp:"Tener preferencia no es tener el paso libre. Baja la velocidad: el otro podría no respetar su señal."},
-  {cat:"velocidad", d:true, q:"Respecto a la velocidad mínima, la ley señala que:", opts:["No existe límite mínimo","No debes ir tan lento que obstruyas el tránsito normal","Puedes ir a la velocidad que quieras"], correct:1, exp:"Ir demasiado lento sin motivo también es infracción y genera riesgo, porque obliga a otros a maniobras bruscas."},
-  {cat:"velocidad", d:true, q:"Los camiones de carga pesada y el transporte escolar tienen, en general, un límite de velocidad:", opts:["Igual al de los autos","Menor que el de los autos","Mayor, por su tamaño"], correct:1, exp:"Por su peso y distancia de frenado, van más lento (ej. 90 km/h). Un vehículo pesado necesita muchos más metros para detenerse."},
-
-  /* ---------- ALCOHOL Y DROGAS (12) doble ---------- */
-  {cat:"alcohol", d:true, q:"Se considera 'conducción bajo la influencia del alcohol' cuando la alcoholemia está entre:", opts:["0,1 y 0,3 g/L","0,3 y menos de 0,8 g/L","0,8 y 1,0 g/L"], correct:1, exp:"Tramo 0,3 a 0,79 g/L = bajo la influencia. Desde 0,8 g/L ya es 'estado de ebriedad', con penas mayores."},
-  {cat:"alcohol", d:true, q:"¿Desde qué nivel de alcohol en la sangre se configura el 'estado de ebriedad'?", opts:["0,5 g/L","0,8 g/L","1,0 g/L"], correct:1, exp:"Desde 0,8 g/L inclusive. Antes de la Ley 20.580 el umbral era 1,0; se endureció a 0,8."},
-  {cat:"alcohol", d:true, q:"La 'Ley de Tolerancia Cero' (Ley 20.580) principalmente:", opts:["Prohíbe todo consumo de alcohol a cualquier persona","Bajó los límites al volante de 0,5/1,0 a 0,3/0,8 g/L y subió las sanciones","Solo aplica a conductores profesionales"], correct:1, exp:"Se llama 'tolerancia cero' por la idea de fondo (alcohol y manejo no se mezclan), no porque el límite sea literalmente 0."},
-  {cat:"alcohol", d:true, q:"Para un conductor profesional (licencia Clase A), el límite de alcohol es:", opts:["0,3 g/L igual que todos","0,0 g/L (cualquier resultado positivo lo sanciona)","0,5 g/L por su experiencia"], correct:1, exp:"Los profesionales tienen tolerancia cero real: cualquier positivo los expone directo a las sanciones del estado de ebriedad."},
-  {cat:"alcohol", d:true, q:"Un conductor se niega, sin justificación, a hacerse el alcotest. La ley:", opts:["Lo deja libre por falta de prueba","Presume su responsabilidad y lo sanciona","Solo lo multa si causó un accidente"], correct:1, exp:"Negarse sin motivo al alcotest o a la alcoholemia acarrea sanción. No es una salida: la ley lo presume en tu contra."},
-  {cat:"alcohol", d:true, q:"¿Qué reduce realmente el nivel de alcohol en la sangre?", opts:["Un café cargado o una ducha fría","Comer mucho antes de manejar","Únicamente el paso del tiempo"], correct:2, exp:"Solo el hígado metaboliza el alcohol, y a ritmo fijo. Café, ducha o comida NO aceleran nada: solo el tiempo lo baja."},
-  {cat:"alcohol", d:true, q:"Conducir bajo el efecto de drogas o estupefacientes:", opts:["No está regulado","Se sanciona igual que conducir con alcohol","Solo es problema si son ilegales"], correct:1, exp:"La ley sanciona manejar drogado igual que ebrio. Las drogas alteran reflejos y percepción tanto o más que el alcohol."},
-  {cat:"alcohol", d:true, q:"Algunos medicamentos (antialérgicos, relajantes, para el sueño) pueden:", opts:["Mejorar tu concentración al volante","Producir somnolencia y afectar la conducción","No tener ningún efecto"], correct:1, exp:"Muchos dan sueño o bajan los reflejos. Lee el prospecto o pregunta al médico antes de manejar."},
-  {cat:"alcohol", d:true, q:"El alcohol afecta la conducción principalmente porque:", opts:["Mejora la visión nocturna","Aumenta el tiempo de reacción y reduce el juicio y los reflejos","Solo da sueño"], correct:1, exp:"Reaccionas más lento, calculas mal las distancias y te sientes 'seguro' cuando no lo estás. Por eso es tan peligroso."},
-  {cat:"alcohol", d:true, q:"Si vas a beber, la forma segura de volver es:", opts:["Manejar despacio y con cuidado","Designar un conductor que no beba, o usar taxi/transporte","Esperar 15 minutos y manejar"], correct:1, exp:"Si tomaste, no manejas. Punto. Conductor designado, taxi o app: cualquiera es más barato que un accidente o la cárcel."},
-  {cat:"alcohol", d:true, q:"Manejar a la mañana siguiente de haber bebido mucho:", opts:["Es 100% seguro, ya pasó la noche","Aún puede dar positivo, porque el alcohol tarda horas en eliminarse","Solo afecta si sigues bebiendo"], correct:1, exp:"La 'caña' o resaca puede seguir marcando alcohol en sangre. Si dormiste pocas horas tras beber fuerte, mejor no manejes."},
-  {cat:"alcohol", d:true, q:"Mezclar alcohol con medicamentos al conducir:", opts:["Se anulan entre sí","Potencia los efectos y es aún más peligroso","No cambia nada"], correct:1, exp:"La mezcla multiplica la somnolencia y la pérdida de reflejos. Es una combinación especialmente riesgosa al volante."},
-
-  /* ---------- SRI (7) doble ---------- */
-  {cat:"sri", d:true, q:"Los niños y niñas menores de 12 años deben viajar:", opts:["En el asiento delantero para vigilarlos","Siempre en el asiento trasero","Donde haya espacio"], correct:1, exp:"Menores de 12 SIEMPRE atrás, con cinturón o silla adecuada. En un choque frontal la energía es mucho mayor adelante."},
-  {cat:"sri", d:true, q:"El sistema de retención infantil (silla o alzador) es obligatorio hasta que el niño:", opts:["Cumpla 4 años","Cumpla 9 años (o llegue a 135 cm y 33 kg)","Cumpla 6 años"], correct:1, exp:"Obligatorio hasta cumplir 9 años, o hasta 135 cm y 33 kg. Recién ahí usa solo cinturón, pero sigue atrás hasta los 12."},
-  {cat:"sri", d:true, q:"Llevar a un menor de 12 años en el asiento delantero se considera:", opts:["Falta leve","Falta grave","Falta gravísima (multa 1,5 a 3 UTM y suspensión de licencia)"], correct:2, exp:"Es GRAVÍSIMA: multa de 1,5 a 3 UTM y suspensión de licencia de 5 a 45 días. Igual sanción por menor de 9 sin su silla."},
-  {cat:"sri", d:true, q:"¿Por qué es peligrosa una silla infantil frente a un airbag delantero activo?", opts:["El airbag puede golpear violentamente al niño al inflarse","El niño no ve por la ventana","No hay ningún riesgo"], correct:0, exp:"Los airbags están hechos para adultos; al desplegarse pueden lesionar gravemente a un niño. Por eso van atrás."},
-  {cat:"sri", d:true, q:"¿En qué caso excepcional un menor podría ir adelante?", opts:["Cuando el viaje es corto","Cuando el vehículo no tiene asientos traseros (ej: cabina simple)","Cuando va dormido"], correct:1, exp:"La única excepción es un vehículo sin asientos traseros. Ahí se desactiva el airbag y se usa la silla adecuada."},
-  {cat:"sri", d:true, q:"Un bebé recién nacido debe viajar en:", opts:["Los brazos de un adulto atrás","Una silla mirando hacia atrás (a contramarcha), en el asiento trasero","Un cojín común con cinturón"], correct:1, exp:"A contramarcha protege mejor la cabeza y el cuello del bebé en un choque. Llevarlo en brazos es inútil: sale despedido."},
-  {cat:"sri", d:true, q:"La silla infantil debe estar:", opts:["Solo apoyada en el asiento","Certificada y bien anclada, sin holgura excesiva","Cubierta con una manta gruesa"], correct:1, exp:"Debe ser un modelo acreditado y quedar firme (no debe moverse mucho). Mal anclada, no protege en el impacto."},
-
-  /* ---------- CONDUCTA VIAL (20) ---------- */
-  {cat:"conducta", q:"¿Por qué parte de la vía debe circular normalmente un vehículo?", opts:["Por la berma","Por la calzada","Por la acera"], correct:1, exp:"La calzada es para los vehículos. La acera es del peatón y la berma es franja de emergencia, no pista de circulación."},
-  {cat:"conducta", q:"Circular por la berma está permitido:", opts:["Cuando hay tráfico y quieres adelantar","Solo por emergencia o avería que te obligue a detenerte","Siempre que vayas con cuidado"], correct:1, exp:"La berma es zona de resguardo. Usarla para 'ganar tiempo' es infracción y peligroso para quien está detenido allí."},
-  {cat:"conducta", q:"El cinturón de seguridad es obligatorio para:", opts:["Solo el conductor","Solo los asientos delanteros","Todos los ocupantes, adelante y atrás"], correct:2, exp:"Todos, en todos los asientos. Un pasajero de atrás sin cinturón se vuelve un proyectil que puede matar a los de adelante."},
-  {cat:"conducta", q:"El uso del teléfono celular mientras se conduce:", opts:["Se permite para mensajes cortos","Está prohibido, salvo con sistema de manos libres","Se permite en semáforos en rojo"], correct:1, exp:"Prohibido manipularlo; solo manos libres. Escribir al volante te distrae tanto como conducir con alcohol."},
-  {cat:"conducta", q:"El adelantamiento a otro vehículo se hace, por regla general:", opts:["Por la derecha","Por la izquierda, con visibilidad y sin línea continua","Por donde haya espacio"], correct:1, exp:"Se adelanta por la izquierda, solo cuando ves claro el sentido contrario y la señalización lo permite."},
-  {cat:"conducta", q:"Para una distancia de seguimiento segura respecto al auto de adelante:", opts:["Ir lo más pegado posible","Dejar al menos 2 a 3 segundos de separación","La distancia no importa si vas lento"], correct:1, exp:"La regla de los 2–3 segundos (más si está mojado) te da margen para frenar. Ir pegado causa choques por alcance."},
-  {cat:"conducta", q:"Al entrar a un túnel o con neblina densa debes:", opts:["Encender las luces altas","Encender las luces bajas","Apagar todas las luces"], correct:1, exp:"Luces bajas: iluminan sin encandilar. Las altas en neblina rebotan y te enceguecen a ti mismo."},
-  {cat:"conducta", q:"En una rotonda (glorieta), la preferencia la tiene:", opts:["El que va a entrar","El vehículo que ya circula dentro de la rotonda","El de mayor tamaño"], correct:1, exp:"Quien ya está dentro pasa primero; el que entra cede. Así el anillo no se bloquea."},
-  {cat:"conducta", q:"Antes de cambiar de pista debes:", opts:["Solo mirar el retrovisor central","Señalizar con el intermitente y revisar el punto ciego","Cambiarte rápido para no molestar"], correct:1, exp:"El espejo no muestra todo: hay un 'punto ciego' a los costados. Señaliza y gira la cabeza un instante antes de cambiarte."},
-  {cat:"conducta", q:"La bocina debe usarse para:", opts:["Apurar a los demás","Prevenir un accidente o advertir un peligro","Saludar o expresar molestia"], correct:1, exp:"La bocina es una herramienta de seguridad, no de desahogo. Usarla para presionar solo aumenta la tensión y el riesgo."},
-  {cat:"conducta", q:"Al acercarte a un paso peatonal debes:", opts:["Mantener la velocidad","Reducir y estar listo para ceder el paso","Acelerar antes de que crucen"], correct:1, exp:"Anticipa: baja la velocidad para poder detenerte. El peatón puede aparecer de golpe entre autos estacionados."},
-  {cat:"conducta", q:"Conducir en contra del sentido del tránsito (por la pista contraria) es:", opts:["Permitido si no viene nadie","Una infracción gravísima","Una falta leve"], correct:1, exp:"Es gravísima y de las más letales: un choque frontal suma ambas velocidades. Nunca inviertas el sentido."},
-  {cat:"conducta", q:"Si hay congestión y el cruce está bloqueado, debes:", opts:["Entrar igual al cruce para avanzar","No entrar al cruce si no puedes salir de él","Tocar la bocina y forzar el paso"], correct:1, exp:"Quedarte 'atravesado' en la intersección la bloquea para todos, incluidas ambulancias. No entres si no puedes despejarla."},
-  {cat:"conducta", q:"Ante un vehículo detenido con las luces de emergencia encendidas en la vía:", opts:["Adelantarlo a la misma velocidad","Reducir y pasar dejando espacio, con precaución","Tocar la bocina para que se mueva"], correct:1, exp:"Las balizas avisan de un problema. Baja la velocidad y déjale distancia: puede haber personas alrededor del auto."},
-  {cat:"conducta", q:"Comer, maquillarse o programar el GPS mientras manejas:", opts:["Es aceptable si vas lento","Son distracciones peligrosas; detente para hacerlo","No afectan la conducción"], correct:1, exp:"Cualquier cosa que te saque los ojos o las manos del manejo es un riesgo. Si necesitas hacerlo, estaciónate primero."},
-  {cat:"conducta", q:"Llevar una mascota suelta dentro del auto:", opts:["No tiene ningún riesgo","Es peligroso: distrae y en un choque sale disparada; debe ir asegurada","Solo importa en viajes largos"], correct:1, exp:"Un animal suelto te distrae y, en un frenazo, se convierte en proyectil. Llévalo con arnés o en un transportín fijo."},
-  {cat:"conducta", q:"La carga u objetos dentro del vehículo deben:", opts:["Ir sueltos, no pasa nada","Ir bien asegurados; sueltos se vuelven proyectiles en un frenazo","Ir siempre en el asiento delantero"], correct:1, exp:"Una botella o herramienta suelta, en un choque, vuela a gran velocidad. Asegura la carga en la maleta o con sujeción."},
-  {cat:"conducta", q:"Usar audífonos que tapen ambos oídos mientras conduces:", opts:["Está bien si el volumen es bajo","Es peligroso y desaconsejado: no oyes bocinas ni sirenas","Solo se prohíbe a motociclistas"], correct:1, exp:"El oído te avisa de peligros que no ves. Taparlo por completo te deja sordo ante una ambulancia o un bocinazo de alerta."},
-  {cat:"conducta", q:"Lo correcto respecto a las manos y el volante es:", opts:["Manejar con una mano para ir cómodo","Mantener ambas manos en el volante y evitar distracciones","Soltar el volante en rectas"], correct:1, exp:"Ambas manos te dan control para reaccionar. Manejar con una mano y el celular en la otra multiplica el riesgo."},
-  {cat:"conducta", q:"Circular con más pasajeros o carga de la que permite el vehículo:", opts:["No influye en nada","Afecta la estabilidad y el frenado; debes respetar la capacidad","Solo es problema en autopista"], correct:1, exp:"El sobrepeso alarga el frenado y desestabiliza el auto. Respeta la capacidad de asientos y de carga del vehículo."},
-
-  /* ---------- PREFERENCIA DE PASO (11) ---------- */
-  {cat:"paso", q:"En un cruce sin señales ni semáforo, si llegan dos vehículos a la vez, la preferencia es para:", opts:["El que viene por la derecha","El que viene por la izquierda","El más rápido"], correct:0, exp:"Regla de la derecha: sin señalización y en igualdad, cede el que tiene al otro por su lado derecho."},
-  {cat:"paso", q:"Un vehículo de emergencia circula con sirena y balizas encendidas. Debes:", opts:["Mantener tu velocidad y trayecto","Cederle el paso y despejarle la vía","Seguirlo de cerca para avanzar más rápido"], correct:1, exp:"Siempre tienen prioridad. Reduce, oríllate y déjale la vía libre. Seguirlo pegado es infracción y peligroso."},
-  {cat:"paso", q:"Ante un peatón que cruza por un paso de cebra:", opts:["El peatón siempre tiene la preferencia","El vehículo, si va rápido","Depende de quién llegó primero"], correct:0, exp:"En el paso peatonal la prioridad es SIEMPRE del peatón. Debes detenerte y dejarlo cruzar por completo."},
-  {cat:"paso", q:"Vas a virar en una esquina y hay peatones cruzando la calle a la que entras. Debes:", opts:["Tocar la bocina para que se apuren","Cederles el paso y esperar","Pasar rápido antes que ellos"], correct:1, exp:"El peatón que cruza la vía a la que ingresas tiene preferencia. Virar no te da derecho a pasar sobre él."},
-  {cat:"paso", q:"Al salir de un estacionamiento o vía privada hacia la calle, la preferencia la tienen:", opts:["Tú, porque ya vas en movimiento","Los vehículos y peatones que ya circulan por la vía","Nadie, es a quien se atreva primero"], correct:1, exp:"Quien se incorpora cede. Los que ya circulan (y los peatones) pasan primero; tú te integras cuando sea seguro."},
-  {cat:"paso", q:"En un cruce ferroviario, respecto al tren:", opts:["El auto tiene preferencia si va rápido","El tren siempre tiene preferencia; nunca cruces con barrera baja o luz activa","Pasa el primero que llega"], correct:1, exp:"El tren no puede frenar a tiempo ni esquivar. Con barrera baja o luz encendida, jamás cruces. Espera."},
-  {cat:"paso", q:"Un bus de transporte escolar está detenido y bajan niños. Debes:", opts:["Adelantarlo rápido","Detenerte o pasar a paso de hombre con máxima precaución","Tocar la bocina"], correct:1, exp:"Los niños pueden cruzar por delante o detrás del bus sin mirar. Extrema el cuidado y prepárate para detenerte."},
-  {cat:"paso", q:"El semáforo está en verde, pero aún hay peatones terminando de cruzar. Debes:", opts:["Avanzar, tienes verde","Cederles el paso hasta que terminen de cruzar","Avanzar tocando la bocina"], correct:1, exp:"El verde te habilita, pero no te autoriza a atropellar. Primero se completa el cruce del peatón."},
-  {cat:"paso", q:"Circulas por una vía preferente y otro vehículo espera con señal 'Ceda el paso' para incorporarse. Entonces:", opts:["Debes frenar y cederle","Tú tienes la preferencia y continúas","Ambos deben detenerse"], correct:1, exp:"La señal 'Ceda' es para él, no para ti. Tú mantienes tu marcha; él espera un hueco seguro para entrar."},
-  {cat:"paso", q:"Una ambulancia está detenida atendiendo una emergencia con sus balizas encendidas. Debes:", opts:["Pasar a tu velocidad normal","Reducir y pasar con precaución, dejando espacio","Tocar la bocina"], correct:1, exp:"Puede haber personal o pacientes alrededor. Baja la velocidad y déjale distancia hasta pasarla."},
-  {cat:"paso", q:"Un peatón con bastón blanco (persona ciega) va a cruzar. Debes:", opts:["Apurarlo con la bocina","Darle máxima prioridad y esperar con paciencia","Pasar rápido si no te ve"], correct:1, exp:"El bastón blanco identifica a una persona con discapacidad visual. Detente por completo y dale todo el tiempo que necesite."},
-
-  /* ---------- CONVIVENCIA VIAL (10) ---------- */
-  {cat:"convivencia", q:"Al adelantar a un ciclista, el automovilista debe dejar una distancia lateral mínima de:", opts:["0,5 metro","1 metro","1,5 metros"], correct:2, exp:"Mínimo 1,5 metros (Ley 21.088). El ciclista es frágil: un roce a velocidad puede ser mortal. Si no cabe, espera."},
-  {cat:"convivencia", q:"Por regla general, los ciclistas deben circular por:", opts:["La vereda, junto a los peatones","La ciclovía si existe, o por la calzada","Por donde prefieran"], correct:1, exp:"Ciclovía si la hay; si no, la calzada por el costado derecho. La vereda es del peatón, salvo excepciones puntuales."},
-  {cat:"convivencia", q:"¿Quiénes pueden circular en bicicleta por la vereda como excepción?", opts:["Cualquier persona con casco","Menores de 7 años acompañados, menores de 14 solos, adultos mayores y personas con movilidad reducida","Solo repartidores"], correct:1, exp:"Son grupos vulnerables a los que se les permite la vereda, siempre a velocidad de peatón y cediéndoles el paso."},
-  {cat:"convivencia", q:"Bajo la Ley de Convivencia Vial, el conductor de vehículo motorizado:", opts:["Tiene siempre la razón por ser más grande","Asume mayor responsabilidad frente a peatones y ciclistas (los más vulnerables)","No tiene deberes especiales"], correct:1, exp:"Manejas la unidad más pesada y peligrosa: por eso te exigen más cuidado con quien puede salir peor herido."},
-  {cat:"convivencia", q:"Al virar en una esquina donde hay una ciclovía, debes:", opts:["Pasar primero por ser auto","Ceder el paso a ciclistas y peatones que cruzan","Acelerar el giro"], correct:1, exp:"Antes de cruzar la ciclovía o el paso peatonal, cede. Es uno de los puntos donde más se atropella a ciclistas."},
-  {cat:"convivencia", q:"El peatón debe cruzar la calle:", opts:["Por donde le quede más cerca","Por los pasos peatonales o esquinas, respetando el semáforo","Corriendo entre los autos"], correct:1, exp:"Los cruces existen para hacerlo predecible y seguro. Igual, el conductor debe cuidar al peatón aunque este se equivoque."},
-  {cat:"convivencia", q:"Una 'zona de tránsito calmado' es:", opts:["Una autopista rápida","Un sector residencial o escolar donde el municipio fija velocidades reducidas (20 a 40 km/h)","Una zona sin reglas"], correct:1, exp:"Se crean donde hay muchos peatones o niños. Baja tú la velocidad: ahí conviven autos, personas y ciclos."},
-  {cat:"convivencia", q:"Si no tienes 1,5 m de espacio para adelantar con seguridad a un ciclista, debes:", opts:["Adelantar igual, rozándolo","Esperar detrás hasta que sea seguro rebasarlo","Tocar la bocina para que se orille"], correct:1, exp:"Sin espacio, no adelantas. Perder unos segundos vale infinitamente menos que la vida de una persona."},
-  {cat:"convivencia", q:"Un scooter o patineta eléctrica ('ciclo') en la vía:", opts:["Puede ir por la vereda a toda velocidad","Sigue reglas similares a la bici: ciclovía o calzada, no la vereda","No tiene ninguna regla"], correct:1, exp:"Los 'ciclos' (bici, scooter, patineta eléctrica) comparten las mismas reglas. Trátalos con el mismo cuidado que a un ciclista."},
-  {cat:"convivencia", q:"Como automovilista, frente a una motocicleta debes:", opts:["Ignorarla, es más ágil","Darle el mismo respeto y distancia; es un vehículo vulnerable, revisa tus puntos ciegos","Adelantarla siempre rápido"], correct:1, exp:"Las motos se esconden fácil en el punto ciego. Mira dos veces antes de cambiarte de pista o virar; su cuerpo está expuesto."},
-
-  /* ---------- MANIOBRAS (12) ---------- */
-  {cat:"maniobras", q:"Antes de virar o cambiar de pista, lo primero es:", opts:["Frenar de golpe","Señalizar con anticipación usando el intermitente","Acelerar"], correct:1, exp:"Avisar a tiempo con la luz deja que los demás reaccionen. Señalizar tarde o no hacerlo provoca choques."},
-  {cat:"maniobras", q:"Al retroceder con el vehículo, debes:", opts:["Confiar solo en los espejos","Asegurarte de que no haya peatones ni obstáculos detrás, girando la cabeza","Retroceder rápido para terminar antes"], correct:1, exp:"Hacia atrás la visibilidad es pésima. Mira directamente, ve lento y, si hay dudas, pide que alguien te guíe."},
-  {cat:"maniobras", q:"Para virar a la izquierda en una calle de doble sentido, debes:", opts:["Cruzar rápido antes que los de enfrente","Ubicarte cerca del eje central y ceder el paso a los que vienen de frente","Virar desde la pista derecha"], correct:1, exp:"Te acercas al centro, esperas un hueco y cedes a los que vienen. Cruzar apurado frente a otros causa choques."},
-  {cat:"maniobras", q:"Al estacionar en una pendiente cuesta abajo, además del freno de mano, debes:", opts:["Dejar las ruedas rectas","Girar las ruedas hacia la cuneta o vereda","Dejar una marcha puesta y nada más"], correct:1, exp:"Si el auto se suelta, las ruedas giradas hacia la vereda lo detienen contra ella en vez de largarse calle abajo."},
-  {cat:"maniobras", q:"Está prohibido adelantar en:", opts:["Rectas con buena visibilidad","Curvas, puentes, túneles, cruces y con línea continua","Cualquier lugar con dos pistas"], correct:1, exp:"En esos puntos no ves el sentido contrario o hay poco espacio. Adelantar ahí es apostar de frente a ciegas."},
-  {cat:"maniobras", q:"Antes de abrir la puerta de tu auto estacionado en la calle, debes:", opts:["Abrirla de una vez","Mirar que no venga un ciclista o vehículo por ese lado","Abrir solo un poco y empujar"], correct:1, exp:"Abrir sin mirar ('dooring') derriba ciclistas y causa choques. Un vistazo por el espejo y hacia atrás lo evita."},
-  {cat:"maniobras", q:"Al incorporarte a una autopista por la pista de aceleración, debes:", opts:["Entrar despacio y frenar si es necesario","Igualar la velocidad del tránsito y ceder a los que ya circulan","Detenerte al final de la pista y esperar"], correct:1, exp:"Acelera para entrar al ritmo del flujo y busca el hueco. Frenar o detenerte en la incorporación provoca alcances."},
-  {cat:"maniobras", q:"No debes adelantar cuando:", opts:["Hay línea segmentada","No tienes visibilidad suficiente del sentido contrario","La vía está despejada"], correct:1, exp:"Sin ver claro lo que viene, no adelantas. La regla básica: solo rebasas si puedes completar la maniobra sin riesgo."},
-  {cat:"maniobras", q:"Al estacionar, la ley prohíbe hacerlo, entre otros lugares, en:", opts:["Una calle ancha de tu barrio","Cruces, curvas, puentes, túneles y ciclovías","Frente a tu propia casa"], correct:1, exp:"Estacionar en esos puntos bloquea la circulación o tapa la visibilidad. Además pueden retirar tu vehículo con grúa."},
-  {cat:"maniobras", q:"Un viraje en U (media vuelta) está prohibido:", opts:["En cualquier calle","Donde hay línea continua, curvas, cimas o poca visibilidad","Solo en autopistas"], correct:1, exp:"Dar la vuelta sin ver bien lo que viene es muy peligroso. Hazlo solo donde esté permitido y con total visibilidad."},
-  {cat:"maniobras", q:"Al estacionar en paralelo junto a la vereda, debes:", opts:["Dejar el auto medio en la calzada","Quedar pegado a la vereda, sin obstruir la circulación ni un cruce","Estacionar en diagonal"], correct:1, exp:"Bien pegado y alineado no estorbas el tránsito ni tapas visibilidad. Sobresalir a la pista provoca choques y multas."},
-  {cat:"maniobras", q:"Salir en reversa desde un estacionamiento hacia la vía exige:", opts:["Salir rápido para no estorbar","Ceder a todos y salir muy lento, porque la visibilidad hacia atrás es mala","Confiar solo en el espejo central"], correct:1, exp:"En reversa ves poco y los demás no te esperan. Cede el paso, avanza de a poco y detente ante cualquier duda."},
-
-  /* ---------- LUCES (8) ---------- */
-  {cat:"luces", q:"Las luces bajas se usan principalmente:", opts:["Solo en el día","De noche y en túneles o neblina, para ver sin encandilar","Nunca, son opcionales"], correct:1, exp:"Son tu iluminación normal de noche y en baja visibilidad. Alumbran la vía sin cegar a los demás."},
-  {cat:"luces", q:"Las luces altas deben usarse:", opts:["Siempre que sea de noche","Solo en caminos sin iluminación y sin vehículos de frente; se bajan al cruzarse con otro auto","En ciudad para ver mejor"], correct:1, exp:"Alumbran lejos, pero encandilan. Al ver un auto de frente o ir detrás de otro, cambia a bajas para no cegarlo."},
-  {cat:"luces", q:"Los intermitentes (señalizadores) sirven para:", opts:["Avisar que vas a virar o cambiar de pista","Indicar que el auto está en venta","Adornar el vehículo"], correct:0, exp:"Comunican tu intención a los demás. Un giro sin señalizar sorprende y provoca choques por alcance."},
-  {cat:"luces", q:"Las luces de emergencia (los cuatro intermitentes a la vez) se usan cuando:", opts:["Vas con apuro","El vehículo está detenido por avería o hay un peligro que advertir","Está lloviendo un poco"], correct:1, exp:"Avisan 'atención, problema aquí'. Enciéndelas si te quedas detenido en la vía o para alertar de un riesgo repentino."},
-  {cat:"luces", q:"Conducir de noche sin luces encendidas:", opts:["Se permite en calles iluminadas","Es infracción y muy peligroso","Ahorra batería"], correct:1, exp:"Sin luces no ves bien y, peor, otros no te ven. Es infracción y una causa frecuente de atropellos nocturnos."},
-  {cat:"luces", q:"Si un vehículo de frente te encandila con sus luces, debes:", opts:["Mirar directo a la luz","No mirar la luz, fijar la vista en el borde derecho de tu pista y reducir","Encender tus altas para responderle"], correct:1, exp:"Mirar la luz te deja ciego unos segundos. Guíate por la línea del borde derecho y baja la velocidad hasta que pase."},
-  {cat:"luces", q:"Las luces de freno (rojas traseras) sirven para:", opts:["Iluminar la maleta","Avisar a los de atrás que estás frenando","Nada importante"], correct:1, exp:"Le dicen al de atrás que reduzcas para que él también frene. Si fallan, te chocan por detrás sin alcanzar a reaccionar."},
-  {cat:"luces", q:"Circular de noche sin luces traseras ni de patente:", opts:["No importa si vas lento","Es peligroso e infracción: no te ven por atrás","Solo aplica en carretera"], correct:1, exp:"Sin luces traseras eres casi invisible de noche. Es una causa típica de choques por alcance; mantenlas siempre operativas."},
-
-  /* ---------- ACCIDENTES Y EMERGENCIAS (10) ---------- */
-  {cat:"emergencia", q:"Si te ves involucrado en un accidente de tránsito, debes:", opts:["Seguir tu camino si el daño es menor","Detenerte, prestar auxilio y dar aviso a Carabineros","Discutir de quién fue la culpa antes que nada"], correct:1, exp:"Primero: parar, ayudar y avisar. Irte del lugar, aunque el golpe parezca leve, te complica legalmente."},
-  {cat:"emergencia", q:"Fugarse del lugar de un accidente en el que hay personas lesionadas:", opts:["Es una falta menor","Es un delito grave (Ley Emilia) con penas serias","Está permitido si tienes miedo"], correct:1, exp:"La fuga se castiga fuerte e impide obtener o renovar la licencia. Aunque estés asustado, quédate y auxilia."},
-  {cat:"emergencia", q:"Ante una persona herida en un accidente, lo correcto es:", opts:["Moverla de inmediato al lado","No moverla salvo peligro inminente (fuego, otro choque) y esperar a los servicios de emergencia","Darle agua y sentarla"], correct:1, exp:"Mover a un herido puede agravar una lesión de columna. Solo lo mueves si quedarse es más peligroso que moverlo."},
-  {cat:"emergencia", q:"¿A qué número llamas a Carabineros ante una emergencia en Chile?", opts:["131","132","133"], correct:2, exp:"133 = Carabineros. Recuerda también 131 (ambulancia/SAMU) y 132 (bomberos). Da ubicación clara y número de heridos."},
-  {cat:"emergencia", q:"Si tu vehículo se detiene o se avería en plena vía, debes:", opts:["Bajarte y alejarte sin señalizar","Encender las luces de emergencia y colocar el triángulo de seguridad detrás","Empujarlo tú solo por la pista"], correct:1, exp:"Balizas + triángulo avisan a los que vienen y evitan que te choquen por atrás. Ubícate en un lugar visible y seguro."},
-  {cat:"emergencia", q:"Ante un amago de incendio en el motor, lo recomendable es:", opts:["Abrir el capó de inmediato y de par en par","Detener, apagar el motor, alejar a los ocupantes y usar el extintor solo si es seguro","Echarle agua encima"], correct:1, exp:"Abrir el capó de golpe aviva el fuego con oxígeno. Primero saca a la gente; el auto se reemplaza, las personas no."},
-  {cat:"emergencia", q:"Lo primero al llegar a la escena de un accidente es:", opts:["Grabar un video","Asegurar el lugar para evitar un segundo choque (señalizar, advertir)","Mover los autos de inmediato"], correct:1, exp:"Proteger la escena evita que otro vehículo atropelle a los que ya están ayudando. Primero seguridad, luego auxilio."},
-  {cat:"emergencia", q:"La regla PAS para actuar ante un accidente es:", opts:["Parar, Acelerar, Salir","Proteger, Avisar, Socorrer","Preguntar, Anotar, Seguir"], correct:1, exp:"PAS: primero Proteger (asegurar la zona), luego Avisar (llamar a emergencias) y por último Socorrer a los heridos."},
-  {cat:"emergencia", q:"Ante una hemorragia visible en un herido, lo básico es:", opts:["Dejar que sangre para 'limpiar' la herida","Presionar la herida con un paño limpio hasta que llegue la ayuda","Aplicar hielo directo"], correct:1, exp:"La presión directa ayuda a frenar el sangrado. Mantén la calma, presiona firme y espera a los servicios de emergencia."},
-  {cat:"emergencia", q:"A una persona herida de gravedad NO debes:", opts:["Hablarle para tranquilizarla","Darle de comer o beber","Abrigarla"], correct:1, exp:"Comida o líquido pueden atragantarla o complicar una cirugía urgente. Solo acompáñala y espera a los profesionales."},
-
-  /* ---------- SEGURIDAD DEL VEHÍCULO (12) ---------- */
-  {cat:"segur", q:"El cinturón de seguridad y el airbag son elementos de seguridad:", opts:["Activa (evitan el choque)","Pasiva (protegen cuando el choque ya ocurre)","Estética"], correct:1, exp:"Seguridad PASIVA: reducen el daño una vez producido el impacto. La ACTIVA (frenos, neumáticos, dirección) lo evita antes."},
-  {cat:"segur", q:"La distancia total de frenado del vehículo:", opts:["Es siempre la misma","Aumenta con la velocidad y con el pavimento mojado","Solo depende del auto"], correct:1, exp:"A más velocidad, la distancia para detenerte crece mucho, y con lluvia aún más. Por eso bajas la velocidad si llueve."},
-  {cat:"segur", q:"La profundidad mínima legal del dibujo (banda de rodamiento) del neumático es:", opts:["0,5 mm","1,6 mm","5 mm"], correct:1, exp:"Mínimo 1,6 mm. Bajo eso el neumático pierde agarre y no drena el agua: aumenta el riesgo de perder el control."},
-  {cat:"segur", q:"El sistema de frenos ABS sirve para:", opts:["Frenar en menos metros siempre","Evitar que las ruedas se bloqueen y mantener el control de la dirección al frenar fuerte","Aumentar la velocidad máxima"], correct:1, exp:"Con ABS, en un frenazo las ruedas no se traban, así puedes seguir girando para esquivar. Te da control, no magia."},
-  {cat:"segur", q:"Si sientes sueño o fatiga mientras conduces, lo correcto es:", opts:["Abrir la ventana y subir la música","Detenerte en un lugar seguro a descansar","Acelerar para llegar antes"], correct:1, exp:"Nada reemplaza al descanso. Una microdormida al volante mata igual que el alcohol. Detente y duerme un poco."},
-  {cat:"segur", q:"El apoyacabezas bien ajustado sirve para:", opts:["Descansar la cabeza en viajes largos","Prevenir lesiones de cuello (latigazo) en un choque por atrás","Nada, es decorativo"], correct:1, exp:"En un impacto trasero, sujeta la cabeza y evita el 'latigazo' cervical. Ajústalo a la altura de tu nuca."},
-  {cat:"segur", q:"El 'aquaplaning' (o hidroplaneo) ocurre cuando:", opts:["El motor se recalienta","El neumático pierde contacto por una capa de agua y el auto 'flota' sin control","Se empañan los vidrios"], correct:1, exp:"Sobre agua y a velocidad, el neumático deja de agarrar. Reduce con lluvia y mantén los neumáticos con buen dibujo."},
-  {cat:"segur", q:"Antes de un viaje largo conviene revisar:", opts:["Solo el estanque de bencina","Neumáticos, luces, frenos y niveles (aceite, agua)","Nada, si el auto anduvo ayer"], correct:1, exp:"Una revisión de 5 minutos evita quedarte botado o algo peor en carretera. Prevención barata contra problemas caros."},
-  {cat:"segur", q:"Si se revienta un neumático a alta velocidad, lo correcto es:", opts:["Frenar de golpe","Sujetar firme el volante, soltar el acelerador y frenar suavemente hasta detenerte","Girar bruscamente hacia la berma"], correct:1, exp:"Frenar o girar de golpe te hace perder el control. Mantén derecho, desacelera de a poco y sal de la vía con calma."},
-  {cat:"segur", q:"La presión de los neumáticos conviene revisarla:", opts:["Nunca, se mantiene sola","Periódicamente; mal inflados frenan peor y se gastan más","Solo cuando se pinchan"], correct:1, exp:"Un neumático desinflado calienta, frena mal y gasta más combustible. Revísala cada cierto tiempo y antes de viajar."},
-  {cat:"segur", q:"Ajustar los espejos y el asiento se hace:", opts:["Mientras manejas","Antes de partir, para reducir puntos ciegos y ir cómodo","No es necesario"], correct:1, exp:"Con espejos y asiento bien puestos ves más y llegas mejor a los mandos. Ajustarlos en movimiento es una distracción peligrosa."},
-  {cat:"segur", q:"Si el indicador de temperatura del motor sube a la zona roja, debes:", opts:["Seguir hasta llegar","Detenerte y apagar el motor; seguir puede fundirlo","Echarle agua fría de inmediato al motor caliente"], correct:1, exp:"El rojo avisa recalentamiento. Detente y deja enfriar; forzar el motor caliente puede dañarlo de forma grave y cara."},
-
-  /* ---------- DOCUMENTOS Y LICENCIA (10) ---------- */
-  {cat:"docs", q:"¿Qué documentos debes portar y mantener vigentes para conducir legalmente?", opts:["Solo la licencia","Licencia vigente, permiso de circulación, revisión técnica y seguro obligatorio (SOAP)","Solo el permiso de circulación"], correct:1, exp:"Los cuatro. Que falte cualquiera es infracción; Carabineros puede cursar parte e incluso retener el vehículo."},
-  {cat:"docs", q:"La licencia Clase B habilita para conducir:", opts:["Buses y camiones de pasajeros","Automóviles y vehículos livianos particulares (no transporte remunerado de pasajeros)","Motos de cualquier cilindrada"], correct:1, exp:"Clase B = livianos particulares (auto, camioneta, furgón hasta cierto peso). Transportar pasajeros por dinero exige clase profesional."},
-  {cat:"docs", q:"El SOAP (Seguro Obligatorio de Accidentes Personales) cubre:", opts:["Los daños de tu vehículo","Las lesiones o muerte de personas en un accidente de tránsito","El robo del auto"], correct:1, exp:"El SOAP protege a las PERSONAS, no la chapa. Para daños materiales necesitas un seguro adicional voluntario."},
-  {cat:"docs", q:"Conducir sin haber obtenido licencia de conducir es:", opts:["Una falta leve","Una falta gravísima","Permitido si vas acompañado de un licenciado"], correct:1, exp:"Es gravísima. No existe el 'permiso de aprendiz informal': manejar sin licencia te expone a multa alta y más si hay accidente."},
-  {cat:"docs", q:"La edad mínima para obtener la licencia Clase B es, por regla general:", opts:["16 años","18 años (excepcionalmente 17 con requisitos)","21 años"], correct:1, exp:"18 años. A los 17 solo de forma excepcional cumpliendo requisitos. La madurez al volante importa tanto como la técnica."},
-  {cat:"docs", q:"La revisión técnica sirve para:", opts:["Cobrar un impuesto","Certificar que el vehículo está mecánicamente apto y dentro de la norma de emisiones","Pintar la patente"], correct:1, exp:"Verifica frenos, luces, dirección y gases. Un auto sin revisión al día es un riesgo para ti y para el resto."},
-  {cat:"docs", q:"Para renovar la licencia de conducir, en general debes:", opts:["Solo pagar","Rendir exámenes de vista y reflejos, cuando esté vencida o próxima a caducar","Sacar una nueva desde cero cada año"], correct:1, exp:"La renovación revisa que sigas apto (vista, reflejos). Hazla cuando corresponda para no manejar con licencia vencida."},
-  {cat:"docs", q:"¿Cuál de estas situaciones puede impedir obtener o renovar la licencia?", opts:["Haber pagado una multa de estacionamiento","Haberse fugado de un accidente con lesionados o tener condena por manejo ebrio","Cambiarse de comuna"], correct:1, exp:"La ley bloquea la licencia a quien cometió faltas graves como fuga o conducción ebria. Son antecedentes que pesan."},
-  {cat:"docs", q:"El permiso de circulación acredita que:", opts:["Aprobaste el examen teórico","El vehículo pagó su permiso anual para circular","El auto está asegurado contra robo"], correct:1, exp:"Es el pago anual que habilita al vehículo a andar por las vías. Sin él vigente, te arriesgas a multa y retención."},
-  {cat:"docs", q:"Si acumulas multas de tránsito impagas:", opts:["No pasa nada","Pueden impedirte renovar el permiso de circulación y complicar trámites","Se borran solas al año"], correct:1, exp:"Las multas impagas quedan registradas y traban trámites del vehículo. Conviene mantenerlas al día."},
-
-  /* ---------- INFRACCIONES Y SANCIONES (8) ---------- */
-  {cat:"infrac", q:"Las infracciones de tránsito se clasifican en:", opts:["Solo leves y graves","Leves, graves y gravísimas, según el riesgo","Solo multas de dinero"], correct:1, exp:"Tres niveles según el peligro que generan. Mientras más riesgo, mayor multa y más posibilidad de suspender la licencia."},
-  {cat:"infrac", q:"¿Cuál de estas es una falta gravísima?", opts:["No portar la placa delantera","Conducir en estado de ebriedad","No llevar el permiso de circulación físico"], correct:1, exp:"Manejar ebrio es gravísima, junto con sin licencia, exceso de más de 20 km/h o pasarse un rojo. Son las más peligrosas."},
-  {cat:"infrac", q:"Pasarse una luz roja del semáforo es:", opts:["Falta leve","Falta gravísima","No es infracción si no viene nadie"], correct:1, exp:"Gravísima: es una de las causas típicas de choques laterales graves en intersección. El rojo no se negocia."},
-  {cat:"infrac", q:"No usar el cinturón de seguridad se considera:", opts:["Sin sanción","Una infracción (grave)","Recomendación opcional"], correct:1, exp:"Es infracción, y sobre todo te salva la vida: en un choque, sin cinturón sales despedido o golpeas el parabrisas."},
-  {cat:"infrac", q:"Reincidir en conducir en estado de ebriedad puede llevar a:", opts:["Solo una multa pequeña","Suspensión prolongada e incluso la cancelación de la licencia","Un curso y nada más"], correct:1, exp:"La ley endurece la sanción con cada reincidencia: de suspensión larga a perder la licencia. Manejar ebrio no tiene excusa."},
-  {cat:"infrac", q:"Las multas de tránsito se tramitan y resuelven en:", opts:["La comisaría","El Juzgado de Policía Local (JPL)","La notaría"], correct:1, exp:"El parte llega al Juzgado de Policía Local de la comuna donde ocurrió la falta. Ahí se cursa y se paga la multa."},
-  {cat:"infrac", q:"Si Carabineros te detiene y no llevas la licencia vigente:", opts:["Te dejan seguir sin problema","Pueden cursarte un parte e incluso retener el vehículo","Solo te dan una advertencia siempre"], correct:1, exp:"Conducir sin licencia al día es infracción seria. Además del parte, pueden retener el auto hasta regularizar."},
-  {cat:"infrac", q:"El objetivo de fondo de las sanciones de tránsito es:", opts:["Recaudar dinero para el Estado","Desincentivar conductas peligrosas y salvar vidas","Molestar a los conductores"], correct:1, exp:"Las multas buscan que dejes de arriesgar tu vida y la de otros. Verlas solo como 'cobro' hace perder el punto."},
-
-  /* ---------- MEDIO AMBIENTE Y EFICIENCIA (6) ---------- */
-  {cat:"ambiente", q:"La conducción eficiente (eco-driving) consiste en:", opts:["Acelerar y frenar bruscamente","Acelerar y frenar de forma suave y mantener velocidad constante","Ir siempre a la máxima velocidad"], correct:1, exp:"Manejar suave ahorra combustible, reduce emisiones y el desgaste del auto. Además es más seguro y cómodo."},
-  {cat:"ambiente", q:"Dejar el motor encendido mucho rato con el auto detenido (ralentí):", opts:["Ayuda al motor","Gasta combustible y contamina sin necesidad; conviene apagarlo","Es obligatorio en el semáforo"], correct:1, exp:"En una detención larga, apagar el motor ahorra bencina y evita emitir gases al pedo. Los autos modernos parten sin problema."},
-  {cat:"ambiente", q:"La revisión técnica, en materia ambiental, mide:", opts:["El color del auto","Las emisiones de gases contaminantes del vehículo","La antigüedad del modelo"], correct:1, exp:"Controla que el auto no emita más gases de lo permitido. Un motor mal mantenido contamina y puede reprobar."},
-  {cat:"ambiente", q:"Los neumáticos mal inflados, respecto al medio ambiente:", opts:["Dan lo mismo","Aumentan el consumo de combustible y, con ello, las emisiones","Reducen el consumo"], correct:1, exp:"Con baja presión el motor trabaja más y quema más bencina. Mantenerlos bien inflados ahorra plata y contamina menos."},
-  {cat:"ambiente", q:"La restricción vehicular en algunas ciudades:", opts:["Es una recomendación","Limita la circulación según el último dígito de la patente para reducir la contaminación","Solo aplica a camiones"], correct:1, exp:"En episodios de mala calidad del aire se restringe la circulación por patente. No respetarla es infracción."},
-  {cat:"ambiente", q:"Mantener el vehículo en buen estado (filtros, motor, afinamiento):", opts:["No influye en el consumo","Reduce el consumo de combustible y la contaminación","Solo importa para la estética"], correct:1, exp:"Un motor afinado quema mejor la bencina: gastas menos y ensucias menos el aire. La mantención se paga sola."},
-
-  /* ---------- EL CONDUCTOR: FATIGA Y ÁNIMO (6) ---------- */
-  {cat:"humano", q:"La fatiga o el sueño al volante:", opts:["Se quitan con música fuerte","Reducen la atención y los reflejos, como el alcohol; hay que detenerse a descansar","No afectan si eres experto"], correct:1, exp:"Cansado reaccionas tarde y hasta te duermes segundos sin darte cuenta. Ningún truco reemplaza parar y descansar."},
-  {cat:"humano", q:"Manejar muy enojado, estresado o apurado:", opts:["Mejora los reflejos","Afecta el juicio y lleva a maniobras riesgosas; conviene calmarse antes","No tiene relación con la conducción"], correct:1, exp:"Las emociones fuertes nublan las decisiones. Si estás muy alterado, respira y espera unos minutos antes de partir."},
-  {cat:"humano", q:"Una buena visión para conducir:", opts:["No es importante","Es esencial; por eso la renovación evalúa la vista y debes usar lentes si los necesitas","Solo importa de noche"], correct:1, exp:"Gran parte de la información al manejar entra por los ojos. Si usas lentes o lentillas, úsalos siempre al conducir."},
-  {cat:"humano", q:"En un viaje largo por carretera conviene:", opts:["No parar para llegar antes","Detenerse cada cierto tiempo a estirar las piernas y descansar","Manejar de noche siempre, hay menos tráfico"], correct:1, exp:"Pausas cada par de horas mantienen la concentración. Acumular horas sin parar es cómo llega la fatiga y los errores."},
-  {cat:"humano", q:"La 'conducción defensiva' consiste en:", opts:["Manejar agresivo para imponerte","Anticipar los posibles errores de otros y estar listo para reaccionar","No usar nunca la bocina"], correct:1, exp:"Es dar por hecho que otro puede equivocarse y dejarte margen para evitarlo. Prevenir antes que reaccionar salva vidas."},
-  {cat:"humano", q:"El apuro y la impaciencia al conducir:", opts:["Ayudan a llegar seguro","Llevan a maniobras riesgosas; salir con tiempo previene accidentes","No influyen en el riesgo"], correct:1, exp:"Ganar dos minutos no vale un choque. Planificar y salir con holgura es la forma más simple de manejar tranquilo y seguro."}
-];
-
-/* ============================================================
-   ESTADO Y LÓGICA
-   ============================================================ */
-let state = {mode:null, cat:null, list:[], idx:0, answers:[], timerId:null, timeLeft:0, answered:false};
-const el = id => document.getElementById(id);
-const shuffle = a => {for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-
-/* ---- persistencia en el teléfono (localStorage con respaldo seguro) ---- */
-const store = {
-  get(k){ try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;} },
-  set(k,v){ try{localStorage.setItem(k, JSON.stringify(v));}catch(e){} }
-};
-const getFails = () => store.get('cb_fails') || [];
-function recordAnswer(qText, correct){
-  let fails = getFails();
-  if(correct){ if(fails.includes(qText)){ fails = fails.filter(x=>x!==qText); store.set('cb_fails', fails); } }
-  else { if(!fails.includes(qText)){ fails.push(qText); store.set('cb_fails', fails); } }
-}
-
-function showBest(){
-  const b = store.get('cb_best');
-  el('bestBox').innerHTML = b ? `Tu mejor examen: <b>${b.score}/38</b> · ${b.pass?'aprobado ✓':'reprobado'}` : '';
-}
-function refreshFailsBtn(){
-  const n = getFails().length;
-  el('failsCount').textContent = n;
-  el('failsBtn').style.opacity = n ? '1' : '.55';
-  el('failsDesc').textContent = n ? `Repasa las ${n} pregunta(s) que has errado, hasta dominarlas.` : 'Aún no tienes fallos guardados. Haz un examen o estudia y aquí se juntarán.';
-}
-
-/* ---- home ---- */
-function renderTemario(){ el('temario').innerHTML = `<b>${Q.length} preguntas</b> · <b>${Object.keys(CATS).length} áreas del temario</b>`; }
-function renderChips(){
-  const box = el('catChips'); box.innerHTML='';
-  const all = document.createElement('button');
-  all.className='chip all'; all.innerHTML=`🎲 Repaso general <span class="cnt">25 al azar</span>`;
-  all.onclick=()=>startStudyAll(); box.appendChild(all);
-  const mastered = store.get('cb_mastered') || {};
-  Object.entries(CATS).forEach(([k,c])=>{
-    const n = Q.filter(q=>q.cat===k).length;
-    const b = document.createElement('button');
-    b.className='chip'+(mastered[k]?' mastered':'');
-    b.innerHTML=`<span class="dot" style="background:${c.color}"></span>${c.label}${c.d?' ·2x':''}<span class="cnt">${n}</span>${mastered[k]?'<span class="chk">✓</span>':''}`;
-    b.onclick=()=>startStudy(k); box.appendChild(b);
-  });
-}
-function showStudy(){ const p=el('studyPanel'); p.classList.toggle('hidden'); if(!p.classList.contains('hidden')) p.scrollIntoView({behavior:'smooth'}); }
-
-function cloneQ(q){
-  const opts=q.opts.map((t,i)=>({t,ok:i===q.correct}));
-  shuffle(opts);
-  return {...q, opts:opts.map(o=>o.t), correct:opts.findIndex(o=>o.ok)};
-}
-
-function beginStudyList(list, cat){
-  state.mode='study'; state.cat=cat; state.list=list;
-  state.idx=0; state.answers=[]; state.answered=false;
-  el('timer').classList.add('hidden');
-  swap('quiz'); renderQuestion();
-}
-function startStudy(cat){ beginStudyList(shuffle(Q.filter(q=>q.cat===cat).map(cloneQ)), cat); }
-function startStudyAll(){ beginStudyList(shuffle(Q.map(cloneQ)).slice(0,25), '__all__'); }
-function startFails(){
-  const fails = getFails();
-  const pool = Q.filter(x=>fails.includes(x.q));
-  if(pool.length===0){ el('failsDesc').textContent='Aún no tienes fallos guardados. Primero haz un examen o estudia un área.'; el('failsBtn').animate?el('failsBtn').animate([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:250}):0; return; }
-  beginStudyList(shuffle(pool.map(cloneQ)), '__fails__');
-}
-
-function startExam(){
-  state.mode='exam'; state.cat=null;
-  const dobleCats=['velocidad','alcohol','sri'];
-  let chosen=[];
-  dobleCats.forEach(dc=>{ const pool=shuffle(Q.filter(q=>q.cat===dc)); chosen.push(pool[0]); });
-  const chosenSet=new Set(chosen.map(q=>q.q));
-  const rest=shuffle(Q.filter(q=>!chosenSet.has(q.q)));
-  chosen = chosen.concat(rest.slice(0,35-chosen.length));
-  state.list = shuffle(chosen).map(cloneQ);
-  state.idx=0; state.answers=[]; state.answered=false;
-  state.timeLeft=45*60;
-  el('timer').classList.remove('hidden','warn'); updateTimer();
-  clearInterval(state.timerId);
-  state.timerId=setInterval(()=>{ state.timeLeft--; updateTimer(); if(state.timeLeft<=0){clearInterval(state.timerId); finishExam();} },1000);
-  swap('quiz'); renderQuestion();
-}
-function updateTimer(){
-  const m=Math.floor(state.timeLeft/60), s=state.timeLeft%60;
-  el('timer').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-  el('timer').classList.toggle('warn', state.timeLeft<=120);
-}
-
-function renderQuestion(){
-  const q=state.list[state.idx]; state.answered=false;
-  const c=CATS[q.cat];
-  el('qCat').textContent=c.label; el('qCat').style.color=c.color;
-  el('qText').textContent=q.q;
-  el('qCounter').textContent=`Pregunta ${state.idx+1} de ${state.list.length}`;
-  el('qBadge').innerHTML = q.d ? '<span class="badge-doble">Doble puntaje ×2</span>' : '';
-  el('progFill').style.width=`${(state.idx)/state.list.length*100}%`;
-  el('expBox').innerHTML=''; el('nextBtn').classList.add('hidden');
-  const box=el('opts'); box.innerHTML='';
-  const keys=['A','B','C','D'];
-  q.opts.forEach((t,i)=>{
-    const b=document.createElement('button');
-    b.className='opt';
-    b.innerHTML=`<span class="key">${keys[i]}</span><span>${t}</span>`;
-    b.onclick=()=>selectOption(i);
-    box.appendChild(b);
-  });
-}
-function selectOption(i){
-  if(state.answered) return; state.answered=true;
-  const q=state.list[state.idx];
-  const correct = i===q.correct;
-  state.answers[state.idx]={sel:i, correct};
-  recordAnswer(q.q, correct);
-  const opts=[...el('opts').children];
-  opts.forEach((o,j)=>{ o.disabled=true;
-    if(j===q.correct) o.classList.add('correct');
-    else if(j===i) o.classList.add('wrong'); else o.classList.add('dim'); });
-  if(state.mode==='study'){
-    el('expBox').innerHTML=`<div class="exp"><b>${correct?'Correcto.':'Revisa esto.'}</b> ${q.exp}</div>`;
-  }
-  el('nextBtn').classList.remove('hidden');
-  el('nextBtn').textContent = (state.idx===state.list.length-1) ? (state.mode==='exam'?'Ver resultado':'Terminar') : 'Siguiente';
-}
-function nextQuestion(){
-  if(state.idx < state.list.length-1){ state.idx++; renderQuestion(); window.scrollTo({top:0,behavior:'smooth'}); }
-  else { state.mode==='exam' ? finishExam() : finishStudy(); }
-}
-
-function finishStudy(){
-  const total=state.list.length;
-  const ok=state.answers.filter(a=>a&&a.correct).length;
-  const pct=ok/total*100;
-  clearInterval(state.timerId); el('timer').classList.add('hidden');
-  el('verdict').className='verdict '+(pct>=85?'ok':'no');
-  el('verdict').textContent = pct>=85 ? '¡Dominado!' : 'A reforzar';
-  el('scoreBig').innerHTML=`${ok}<span>/${total}</span>`;
-  el('gaugeFill').style.width=pct+'%';
-  el('gaugeFill').style.background = pct>=85?'var(--green)':pct>=60?'var(--amber)':'var(--red)';
-  el('passLine').style.left='85%';
-  el('resSub').textContent = state.cat==='__all__' ? 'Repaso general (todas las áreas)' : state.cat==='__fails__' ? 'Repaso de tus fallos' : `Área: ${CATS[state.cat].label}`;
-  if(state.cat!=='__all__' && state.cat!=='__fails__' && pct>=85){
-    const m = store.get('cb_mastered') || {}; m[state.cat]=true; store.set('cb_mastered', m);
-  }
-  buildBreakdown(); buildReview();
-  swap('result'); window.scrollTo({top:0,behavior:'smooth'});
-}
-function finishExam(){
-  clearInterval(state.timerId);
-  let score=0, max=0;
-  state.list.forEach((q,i)=>{ const w=q.d?2:1; max+=w; if(state.answers[i]&&state.answers[i].correct) score+=w; });
-  const pass = score>=33;
-  const best = store.get('cb_best');
-  if(!best || score>best.score) store.set('cb_best', {score, pass});
-  el('verdict').className='verdict '+(pass?'ok':'no');
-  el('verdict').textContent = pass ? 'APROBADO' : 'REPROBADO';
-  el('scoreBig').innerHTML=`${score}<span>/${max}</span>`;
-  el('gaugeFill').style.width=(score/max*100)+'%';
-  el('gaugeFill').style.background = pass?'var(--green)':'var(--red)';
-  el('passLine').style.left=(33/max*100)+'%';
-  const answered=state.answers.filter(a=>a).length;
-  el('resSub').textContent = `Necesitabas 33 pts para aprobar. Respondidas ${answered}/${state.list.length}.` + (state.timeLeft<=0?' ⏱ Se acabó el tiempo.':'');
-  buildBreakdown(); buildReview();
-  swap('result'); window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function buildBreakdown(){
-  const box=el('brkBox'); box.innerHTML='';
-  const stats={};
-  state.list.forEach((q,i)=>{ if(!stats[q.cat]) stats[q.cat]={ok:0,tot:0}; stats[q.cat].tot++; if(state.answers[i]&&state.answers[i].correct) stats[q.cat].ok++; });
-  Object.entries(stats).forEach(([k,s])=>{
-    const c=CATS[k]; const good=s.ok===s.tot;
-    const row=document.createElement('div'); row.className='brk-row';
-    row.innerHTML=`<span class="dot" style="background:${c.color}"></span><span class="nm">${c.label}</span>
-      <span class="val" style="color:${good?'var(--green)':s.ok===0?'var(--red)':'var(--muted)'}">${s.ok}/${s.tot}</span>`;
-    box.appendChild(row);
-  });
-}
-function buildReview(){
-  const wrong=[];
-  state.list.forEach((q,i)=>{ if(!state.answers[i] || !state.answers[i].correct) wrong.push({q,i}); });
-  if(wrong.length===0){ el('reviewWrap').classList.add('hidden'); return; }
-  el('reviewWrap').classList.remove('hidden');
-  const box=el('reviewBox'); box.innerHTML='';
-  wrong.forEach(({q,i})=>{
-    const a=state.answers[i];
-    const div=document.createElement('div'); div.className='review-q';
-    let selHtml = a ? `<span class="no">Marcaste: ${q.opts[a.sel]}</span><br>` : `<span class="no">Sin responder</span><br>`;
-    div.innerHTML=`<div class="rq">${q.q}</div><div class="ra">${selHtml}<span class="ok">Correcta: ${q.opts[q.correct]}</span><br><br>${q.exp}</div>`;
-    box.appendChild(div);
-  });
-}
-
-function swap(id){ ['home','quiz','result'].forEach(s=>el(s).classList.add('hidden')); el(id).classList.remove('hidden'); }
-function goHome(){ clearInterval(state.timerId); swap('home'); showBest(); renderChips(); refreshFailsBtn(); }
-function quitQuiz(){ if(confirm('¿Salir? Perderás el avance de esta ronda.')){ clearInterval(state.timerId); swap('home'); refreshFailsBtn(); } }
-
-const FOOT = 'Herramienta de estudio de redacción propia, basada en el Libro del Nuevo Conductor (CONASET) y la Ley de Tránsito 18.290 y sus modificaciones (Leyes 20.580, 21.492, 21.088 y ley de sillas infantiles). No reproduce el banco oficial del examen Nexteo. Datos verificados a agosto 2026. Tu progreso se guarda en este mismo teléfono. Confirma siempre con la Dirección de Tránsito de tu municipalidad.';
-el('foot').textContent=FOOT; el('foot2').textContent=FOOT;
-renderTemario(); renderChips(); showBest(); refreshFailsBtn();
-</script>
+<script src="assets/js/questions.js"></script>
+<script src="assets/js/signs.js"></script>
+<script src="assets/js/app.js"></script>
 </body>
 </html>

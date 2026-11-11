@@ -1,0 +1,12 @@
+{
+  "name": "Examen Clase B · Simulador teórico",
+  "short_name": "Examen Clase B",
+  "description": "Simulador gratuito del examen teórico de licencia Clase B (Chile).",
+  "lang": "es-CL",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#14161A",
+  "theme_color": "#14161A",
+  "icons": [{ "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
