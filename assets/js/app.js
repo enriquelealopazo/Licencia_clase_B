@@ -4,14 +4,55 @@
 (function(){
 'use strict';
 
-const Q = window.QUESTIONS, CATS = window.CATS, SIGNS = window.SIGNS;
+const shuffle = a => { for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+
+const CATS = window.CATS, SIGNS = window.SIGNS, OFFICIAL = window.OFFICIAL_SIGNS || [];
+const OFF_BY_ID = Object.fromEntries(OFFICIAL.map(s => [s.id, s]));
+const CLS = {
+  reglamentaria: {label:'Reglamentarias', exp:'Es una señal reglamentaria: impone una obligación, prohibición o restricción. No respetarla es infracción.'},
+  preventiva:    {label:'Preventivas',    exp:'Es una señal preventiva (fondo amarillo): advierte un peligro más adelante. Reduce la velocidad y prepárate.'},
+  informativa:   {label:'Informativas',   exp:'Es una señal informativa: entrega orientación o información sobre servicios, rutas o zonas.'},
+  transitoria:   {label:'Transitorias',   exp:'Es una señal transitoria (fondo naranja): se instala durante trabajos en la vía. Extrema la precaución y sigue sus indicaciones.'}
+};
+const NOTES = {
+  'pare-ninos':'La muestra un inspector o patrullero escolar en el cruce: obliga a detenerse por completo.',
+  'permitido-virar-a-la-derecha-con-luz-roja-con-precaucion':'Solo con esta señal puedes virar con luz roja, y siempre cediendo el paso a peatones y vehículos.',
+  'paso-por-ambos-lados-vertice':'Puedes pasar por cualquiera de los dos lados del obstáculo o isla.',
+  'preferencia-al-sentido-contrario':'En el tramo angosto pasan primero los que vienen de frente; tú esperas.',
+  'no-bloquear-el-cruce':'No entres al cruce si no tienes espacio para salir de él.',
+  'banderero':'Una persona dirige el tránsito con bandera o paleta: obedece sus indicaciones.',
+  'silencio-prohibido-tocar-la-bocina':'Prohibido usar la bocina, por ejemplo cerca de hospitales.',
+  'prohibido-estacionar-y-detenerse':'Más estricta que "Prohibido estacionar": tampoco puedes detenerte, ni un momento.',
+  'proximidad-de-senal-ceda-el-paso':'Anticipa un Ceda el paso que viene más adelante: prepárate para ceder.'
+};
+const SIGNS_IN_EXAM = 5;          // preguntas de señales con imagen por examen
+
+/* Preguntas generadas desde el catálogo oficial: opciones incorrectas tomadas de señales parecidas */
+(function buildSignQuestions(){
+  const used = new Set(window.QUESTIONS.filter(q => q.img).map(q => q.img));
+  const pick = (arr, n) => shuffle(arr.slice()).slice(0, n);
+  OFFICIAL.filter(s => !used.has(s.id)).forEach(s => {
+    const same = OFFICIAL.filter(o => o.id !== s.id && o.cls === s.cls && o.name !== s.name);
+    let wrong = pick(same.filter(o => o.grp === s.grp), 2);
+    if(wrong.length < 2) wrong = wrong.concat(pick(same.filter(o => !wrong.includes(o) && o.grp !== s.grp), 2 - wrong.length));
+    window.QUESTIONS.push({id:'sign-' + s.id, cat:'visual', img:s.id, q:'¿Qué indica esta señal?',
+      opts:[s.name, ...wrong.map(o => o.name)], correct:0,
+      exp:`Es "${s.name}". ${CLS[s.cls].exp}${NOTES[s.id] ? ' ' + NOTES[s.id] : ''}`});
+  });
+})();
+const Q = window.QUESTIONS;
 const BY_ID = Object.fromEntries(Q.map(q => [q.id, q]));
 const EXAM = {n:35, secs:45*60, pass:33, doubles:['velocidad','alcohol','sri']};
 const FAIL_STREAK = 2;           // aciertos seguidos para sacar una pregunta de "Mis fallos"
 const KEYS = ['A','B','C','D'];
 
 const $ = id => document.getElementById(id);
-const shuffle = a => { for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+function media(key, cls){
+  if(!key) return '';
+  const o = OFF_BY_ID[key];
+  if(o) return `<img class="${cls || 'sign'}" src="${o.src}" alt="Señal: ${o.name}" loading="lazy" decoding="async">`;
+  return SIGNS[key] || '';
+}
 const fmtTime = s => `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
 
 /* ---------------- persistencia ---------------- */
@@ -80,7 +121,8 @@ function begin(mode, title, list, again){
 function startExam(){
   const doubles = EXAM.doubles.map(c => shuffle(Q.filter(q => q.cat === c))[0]);
   const used = new Set(doubles.map(q => q.id));
-  const rest = shuffle(Q.filter(q => !used.has(q.id))).slice(0, EXAM.n - doubles.length);
+  const signs = shuffle(Q.filter(q => q.cat === 'visual')).slice(0, SIGNS_IN_EXAM);
+  const rest = [...signs, ...shuffle(Q.filter(q => q.cat !== 'visual' && !used.has(q.id))).slice(0, EXAM.n - doubles.length - signs.length)];
   const list = shuffle([...doubles.map(q => prep(q, true)), ...rest.map(q => prep(q, false))]);
   begin('exam', 'Examen simulado', list, startExam);
 }
@@ -124,7 +166,7 @@ function render(){
   const done = exam ? S.ans.filter(a => a !== null).length : S.idx;
   $('progFill').style.width = `${done / S.list.length * 100}%`;
   $('qImg').classList.toggle('hidden', !q.img);
-  $('qImg').innerHTML = q.img ? SIGNS[q.img] : '';
+  $('qImg').innerHTML = media(q.img);
   $('qText').textContent = q.q;
   $('expBox').innerHTML = '';
   $('nextBtn').classList.add('hidden');
@@ -179,6 +221,7 @@ function choose(i){
   });
   $('expBox').innerHTML = `<div class="exp ${ok?'ok':'no'}"><b>${ok ? 'Correcto.' : 'Incorrecto.'}</b> </div>`;
   $('expBox').firstChild.appendChild(document.createTextNode(q.exp));
+  if(q.fig) $('expBox').insertAdjacentHTML('beforeend', `<div class="fig">${media(q.fig)}</div>`);
   const last = S.idx === S.list.length-1;
   $('nextBtn').textContent = last ? 'Ver resultado' : 'Siguiente';
   $('nextBtn').classList.remove('hidden');
@@ -291,7 +334,7 @@ function review(kind){
   items.forEach(({q,a}) => {
     const good = a === q.correct;
     const d = document.createElement('div'); d.className = 'review-q';
-    d.innerHTML = `<div class="rq">${q.img ? SIGNS[q.img] : ''}<span></span></div><div class="ra"></div>`;
+    d.innerHTML = `<div class="rq">${media(q.img, 'sign sm')}<span></span></div><div class="ra"></div>`;
     d.querySelector('.rq span').textContent = (q.d ? '[×2] ' : '') + q.q;
     const ra = d.querySelector('.ra');
     const line = (cls, txt) => { const s = document.createElement('span'); s.className = cls; s.textContent = txt; ra.appendChild(s); ra.appendChild(document.createElement('br')); };
@@ -299,6 +342,7 @@ function review(kind){
     else if(!good) line('no', 'Marcaste: ' + q.opts[a]);
     line('ok', (good ? '✓ ' : 'Correcta: ') + q.opts[q.correct]);
     ra.appendChild(document.createTextNode(q.exp));
+    if(q.fig) ra.insertAdjacentHTML('beforeend', `<div class="fig">${media(q.fig)}</div>`);
     box.appendChild(d);
   });
 }
@@ -306,7 +350,9 @@ function review(kind){
 /* ---------------- home ---------------- */
 function renderHome(){
   $('bankSize').textContent = Q.length;
-  $('visualIco').innerHTML = SIGNS.ceda;
+  $('visualIco').innerHTML = media('ceda-el-paso');
+  $('signCount').textContent = Q.filter(q => q.cat === 'visual').length;
+  $('catalogCount').textContent = OFFICIAL.length;
 
   // fallos
   const nf = Object.keys(D.fails).filter(id => BY_ID[id]).length;
@@ -376,9 +422,32 @@ function renderHistory(){
     <div class="hist-list">${rows}</div>`;
 }
 
+/* ---------------- catálogo de señales ---------------- */
+let catFilter = 'all', catHide = false;
+function openCatalog(){ renderCatalog(); show('catalog'); scrollTo({top:0}); }
+function renderCatalog(){
+  const tabs = $('catTabs'); tabs.innerHTML = '';
+  [['all','Todas'], ...Object.entries(CLS).map(([k,v]) => [k, v.label])].forEach(([k,l]) => {
+    const b = document.createElement('button'); b.className = k === catFilter ? 'on' : '';
+    b.textContent = l + ' (' + (k === 'all' ? OFFICIAL.length : OFFICIAL.filter(s => s.cls === k).length) + ')';
+    b.onclick = () => { catFilter = k; renderCatalog(); }; tabs.appendChild(b);
+  });
+  $('catHide').checked = catHide;
+  const g = $('catGrid'); g.innerHTML = '';
+  OFFICIAL.filter(s => catFilter === 'all' || s.cls === catFilter).forEach(s => {
+    const c = document.createElement('button'); c.className = 'scard' + (catHide ? ' hid' : '');
+    c.innerHTML = `${media(s.id)}<span class="nm"></span><span class="tap">Toca para ver</span>`;
+    c.querySelector('.nm').textContent = s.name;
+    c.setAttribute('aria-label', catHide ? 'Señal oculta: toca para ver su nombre' : s.name);
+    c.onclick = () => { c.classList.toggle('hid'); c.setAttribute('aria-label', s.name); };
+    g.appendChild(c);
+  });
+}
+function toggleHide(v){ catHide = v; renderCatalog(); }
+
 /* ---------------- navegación y utilidades ---------------- */
 function show(id){
-  ['home','quiz','result'].forEach(s => $(s).classList.toggle('hidden', s !== id));
+  ['home','quiz','result','catalog'].forEach(s => $(s).classList.toggle('hidden', s !== id));
 }
 function home(){ if(S) clearInterval(S.timerId); S = null; renderHome(); show('home'); scrollTo({top:0}); }
 function quit(){
@@ -413,12 +482,12 @@ addEventListener('beforeunload', e => {
   if(S && S.mode === 'exam' && !$('quiz').classList.contains('hidden')){ e.preventDefault(); e.returnValue = ''; }
 });
 
-$('foot').textContent = 'Herramienta de estudio independiente y gratuita. Preguntas de redacción propia basadas en el Libro del Nuevo Conductor (CONASET) y la Ley de Tránsito 18.290 y sus modificaciones (20.580, 21.088 y otras). No reproduce el banco oficial del examen ni está afiliada a CONASET ni a ninguna municipalidad. Las señales son representaciones didácticas. Confirma requisitos con la Dirección de Tránsito de tu comuna.';
+$('foot').textContent = 'Herramienta de estudio independiente y gratuita, sin afiliación con CONASET ni con municipalidades. Preguntas de redacción propia basadas en el Libro para la Conducción en Chile y la Ley de Tránsito 18.290. Las imágenes de señales provienen del Libro para la Conducción en Chile – Clase B (CONASET, 2024), cuya reproducción autoriza el propio libro; los diagramas de situaciones son ilustraciones propias. No reproduce el banco oficial del examen. Confirma requisitos con la Dirección de Tránsito de tu comuna.';
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
 
-window.App = {startExam, startFails, startVisual, startQuick, startWeak, startCat, next, go, toggleFlag, finishAsk, quit, home, resetAsk};
+window.App = {openCatalog, toggleHide, startExam, startFails, startVisual, startQuick, startWeak, startCat, next, go, toggleFlag, finishAsk, quit, home, resetAsk};
 renderHome();
 })();

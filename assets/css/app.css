@@ -180,3 +180,27 @@ details.info ul{padding-left:18px}
 .modal h3{font-size:26px}
 .modal p{color:var(--muted);font-size:14px;line-height:1.55;margin-top:8px}
 @media (max-width:400px){.btnrow .btn{padding:13px 8px;font-size:14px}}
+
+/* ---------- imágenes oficiales, diagramas y catálogo ---------- */
+.qimg img.sign{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.25))}
+.qimg svg.dia{width:min(100%,420px);height:auto;border-radius:10px}
+.fig{margin-top:12px}
+.fig svg{width:100%;max-width:420px;height:auto;display:block;border-radius:10px}
+.review-q .rq img.sign{width:56px;height:56px;object-fit:contain;flex:none}
+.review-q .rq svg.dia{width:120px;height:auto;flex:none}
+.mode .ico img.sign{width:32px;height:32px;object-fit:contain}
+.cat-h{font-size:34px;margin-top:10px}
+.cat-sub{color:var(--muted);font-size:14px;line-height:1.55;margin:8px 0 14px}
+.cat-sub b{color:var(--ink)}
+.wrap-tabs{flex-wrap:wrap}
+.switch{display:flex;align-items:center;gap:8px;font-size:14px;cursor:pointer;color:var(--ink)}
+.switch input{width:18px;height:18px;accent-color:var(--amber)}
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+.scard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 8px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;min-height:170px;text-align:center}
+.scard:hover{border-color:var(--amber)}
+.scard img.sign{width:96px;height:96px;object-fit:contain}
+.scard .nm{font-size:13px;line-height:1.35;font-weight:500}
+.scard .tap{display:none;font-size:12px;color:var(--muted-2)}
+.scard.hid .nm{display:none}.scard.hid .tap{display:block}
+.foot a{color:inherit}
+@media (max-width:400px){.sgrid{grid-template-columns:repeat(2,1fr)}}

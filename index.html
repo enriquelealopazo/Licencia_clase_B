@@ -59,7 +59,13 @@
       </button>
       <button class="mode" onclick="App.startVisual()">
         <div class="ico t-sky" id="visualIco"></div>
-        <div><h3>Señales visuales</h3><p>Reconoce las señales por su forma y color, como en la calle.</p></div>
+        <div><h3>Señales visuales</h3><p>Reconoce las señales oficiales por su forma y color, como en la calle.</p></div>
+        <div class="count" id="signCount"></div>
+      </button>
+      <button class="mode" onclick="App.openCatalog()">
+        <div class="ico t-sky">▦</div>
+        <div><h3>Catálogo de señales</h3><p>Las señales oficiales del libro CONASET 2024, con modo tarjetas para memorizarlas.</p></div>
+        <div class="count" id="catalogCount"></div>
       </button>
       <button class="mode" onclick="App.startWeak()">
         <div class="ico t-blue">◎</div>
@@ -141,6 +147,19 @@
     <p class="kbd">Atajos: teclas 1-3 o A-C para responder · Enter para avanzar · ← → para moverte</p>
   </section>
 
+  <!-- ================= CATÁLOGO ================= -->
+  <section id="catalog" class="hidden">
+    <div class="topbar">
+      <button class="btn btn-sm" onclick="App.home()">← Inicio</button>
+      <label class="switch"><input type="checkbox" id="catHide" onchange="App.toggleHide(this.checked)"> Ocultar nombres</label>
+    </div>
+    <h2 class="cat-h">Catálogo de señales</h2>
+    <p class="cat-sub">Imágenes oficiales del <b>Libro para la Conducción en Chile – Clase B</b> (CONASET, julio 2024), anexo de señales verticales. Activa "Ocultar nombres" y toca cada tarjeta para ponerte a prueba.</p>
+    <div class="tabs wrap-tabs" id="catTabs"></div>
+    <div class="sgrid" id="catGrid"></div>
+    <p class="foot">Fuente: CONASET, <a href="https://mejoresconductores.conaset.cl" target="_blank" rel="noopener">mejoresconductores.conaset.cl</a>. El libro declara que su reproducción cuenta con la autorización de CONASET. Este sitio no está afiliado a CONASET.</p>
+  </section>
+
   <!-- ================= RESULT ================= -->
   <section id="result" class="hidden">
     <div class="result-hero card">
@@ -170,6 +189,7 @@
   <div class="btnrow"><button class="btn" id="mNo">Cancelar</button><button class="btn btn-primary" id="mYes">Confirmar</button></div></div></div>
 
 <script src="assets/js/questions.js"></script>
+<script src="assets/js/signs-official.js"></script>
 <script src="assets/js/signs.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
