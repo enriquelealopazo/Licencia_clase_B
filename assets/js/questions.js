@@ -231,6 +231,12 @@ window.QUESTIONS=[
  {"id":"humano-6","cat":"humano","q":"El apuro y la impaciencia al conducir:","opts":["Ayudan a llegar seguro","Llevan a maniobras riesgosas; salir con tiempo previene accidentes","No influyen en el riesgo"],"correct":1,"exp":"Ganar dos minutos no vale un choque. Planificar y salir con holgura es la forma más simple de manejar tranquilo y seguro."}
 ];
 
+/* ---------- CINTURÓN DE SEGURIDAD (tema de doble puntaje) ---------- */
+window.QUESTIONS.push(
+ {id:"cinturon-1",cat:"segur",q:"¿Cómo debe ir puesto correctamente el cinturón de seguridad?",opts:["La banda diagonal sobre el hombro y el pecho, y la inferior sobre las caderas","La banda diagonal bajo el brazo para mayor comodidad","La banda inferior sobre el abdomen, bien apretada"],correct:0,exp:"La banda diagonal cruza hombro y pecho (nunca el cuello ni bajo el brazo) y la inferior va sobre los huesos de la cadera, no sobre el abdomen: así reparte la fuerza del choque en las partes más resistentes del cuerpo."},
+ {id:"cinturon-2",cat:"segur",q:"En un choque, un pasajero del asiento trasero sin cinturón:",opts:["No corre riesgo porque va detrás","Sale proyectado y puede herir gravemente a quienes van adelante","Queda protegido por el respaldo delantero"],correct:1,exp:"Sin cinturón, el pasajero de atrás se convierte en un proyectil: golpea a los ocupantes delanteros y puede salir expulsado. Por eso el cinturón es obligatorio en todos los asientos."}
+);
+
 /* ---------- RECONOCIMIENTO VISUAL DE SEÑALES (img = clave en SIGNS) ---------- */
 window.QUESTIONS.push(
  {id:"visual-1",cat:"visual",img:"pare",q:"¿Qué te exige esta señal?",opts:["Detenerte por completo, ceder el paso y avanzar solo cuando sea seguro","Reducir la velocidad y pasar si no viene nadie","Ceder el paso solo si hay un vehículo a la vista"],correct:0,exp:"PARE = detención total siempre, aunque la vía parezca vacía. Reducir sin detenerse es infracción."},
